@@ -25,16 +25,13 @@ ${logout}
 
     <form name='f' action="<c:url value='${baseURL}/j_spring_security_check' />"
           method='POST'>
-        Логін: <input type='text' name='j_username' value=''> Пароль:<input
-            type='password' name='j_password'/> <input name="submit"
-                                                       type="submit" value="ОК"/> <input name="reset" type="reset"
-                                                                                         value="скинути"/>
+        Логін: <input type='text' name='j_username' value=''>
+        Пароль:<input type='password' name='j_password'/>
+        <input name="submit" type="submit" value="ОК"/> <input name="reset" type="reset" value="скинути"/>
     </form>
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
-    <h3>Username : <sec:authentication property="principal.enabled"/> <sec:authentication
-            property="principal.username"/></h3>
-
+    <h3>Користувач : <sec:authentication property="principal.username"/></h3>
     <a href="<c:url value="/j_spring_security_logout" />"> Logout</a>
 </sec:authorize>
 </body>

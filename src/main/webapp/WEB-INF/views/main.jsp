@@ -8,7 +8,7 @@
 <c:set var="baseURL" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>Insert title here</title>
+    <title>Інформаційний портал IFITS</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style type="text/css">
         div {

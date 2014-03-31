@@ -21,7 +21,8 @@
             <td align="center">${user[0].enabled}</td>
             <td align="center">${user[1].authority}</td>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                <td><a href="${baseURL}/users/delete/${user[0].id}">видалити</a></td>
+                <td><a href="${baseURL}/users/delete/${user[0].id}"
+                       onclick="return confirm('Ви впевнені?')">видалити</a></td>
                 <td><a href="${baseURL}/users/edit/${user[0].id}">редагувати</a></td>
             </sec:authorize>
         </tr>

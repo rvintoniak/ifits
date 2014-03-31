@@ -6,7 +6,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <html>
 <head>
-    <title>Spring 3 MVC HashMap Form - viralpatel.net</title>
 </head>
 <body>
 <h1>Інформаційний портал</h1>
@@ -16,11 +15,11 @@
         <table>
             <tr>
                 <td>Назва</td>
-                <td><form:input path="tittle"/></td>
+                <td><form:input path="tittle" cssStyle="width: 404px;"/></td>
             </tr>
             <tr>
                 <td>Опис новини</td>
-                <td><form:textarea path="description"/></td>
+                <td><form:textarea path="description" cssStyle="margin: 2px; width: 404px; height: 215px;"/></td>
             </tr>
             <tr>
                 <td>Категорія</td>
@@ -50,7 +49,7 @@
             <td align="center">${news.user.login}</td>
             <td align="center">${news.category.name}</td>
             <sec:authorize access="hasRole('ROLE_ADMIN')">
-                <td><a href="news/delete/${news.id}">видалити</a></td>
+                <td><a href="news/delete/${news.id}" onclick="return confirm('Ви впевнені?')">видалити</a></td>
                 <td><a href="news/edit/${news.id}">редагувати</a></td>
             </sec:authorize>
         </tr>
