@@ -4,55 +4,33 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 </head>
 <body>
 <h1>Інформаційний портал</h1>
-<sec:authorize access="hasRole('ROLE_ADMIN')">
-    <form:form method="post" action="news/add" modelAttribute="news">
-
-        <table>
-            <tr>
-                <td>Назва</td>
-                <td><form:input path="tittle" cssStyle="width: 404px;"/></td>
-            </tr>
-            <tr>
-                <td>Опис новини</td>
-                <td><form:textarea path="description" cssStyle="margin: 2px; width: 404px; height: 215px;"/></td>
-            </tr>
-            <tr>
-                <td>Категорія</td>
-                <td>
-                    <form:select path="category.id">
-                        <form:options items="${categoryAll}"/>
-                    </form:select>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Додати"/>
-                </td>
-            </tr>
-        </table>
-    </form:form>
-</sec:authorize>
 
 <h3>Новини</h3>
 <table>
     <c:forEach var="news" items="${newsAll}">
-        <tr>
-            <td align="center">${news.id}</td>
-            <td align="center">${news.tittle}</td>
-            <td align="center">${news.description}</td>
-            <td align="center">${news.date}</td>
-            <td align="center">${news.user.login}</td>
-            <td align="center">${news.category.name}</td>
-            <sec:authorize access="hasRole('ROLE_ADMIN')">
-                <td><a href="news/delete/${news.id}" onclick="return confirm('Ви впевнені?')">видалити</a></td>
-                <td><a href="news/edit/${news.id}">редагувати</a></td>
-            </sec:authorize>
-        </tr>
+        <div style="border: 2px solid;">
+            <div class="published"><fmt:formatDate value="${news.date}" pattern="dd.MM.yyyy" /></div>
+            <h1 class="title">
+                <a href="#">${news.tittle}</a>
+            </h1>
+            <div class="content">
+                    ${news.description}
+                <div class="buttons">
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                        <a href="news/edit/${news.id}">редагувати</a>
+                        <a href="news/delete/${news.id}" onclick="return confirm('Ви впевнені?')">видалити</a>
+                     </sec:authorize>
+                </div>
+                <div>${news.user.login}||${news.category.name}</div>
+                <div class="clear" style="clear: both;"></div>
+            </div>
+        </div>
     </c:forEach>
 </table>
 <a href="news">на головну</a>

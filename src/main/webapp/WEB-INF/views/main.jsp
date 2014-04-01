@@ -10,20 +10,20 @@
 <head>
     <title>Інформаційний портал IFITS</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <style type="text/css">
+   <%-- <style type="text/css">
         div {
             border: 2px solid;
         }
-    </style>
+    </style>--%>
 </head>
 <body>
 <div id="header">
     <div id="headerTitle"><tiles:insertAttribute name="header"/></div>
 </div>
-<div id="menu">
+<div id="menu" style="border: 2px solid;">
     <tiles:insertAttribute name="menu"/>
 </div>
-<div id="content">
+<div id="content" >
     <td><tiles:insertAttribute name="body"/>
 </div>
 <div id="footer">

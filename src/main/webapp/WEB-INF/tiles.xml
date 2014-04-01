@@ -18,7 +18,10 @@
         <put-attribute name="body" value="/WEB-INF/views/index.jsp"/>
     </definition>
     <definition name="editNews" extends=".mainTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/editNews.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/news/editNews.jsp"/>
+    </definition>
+    <definition name="addNews" extends=".mainTemplate">
+        <put-attribute name="body" value="/WEB-INF/views/news/addNews.jsp"/>
     </definition>
     <definition name="addUser" extends=".mainTemplate">
         <put-attribute name="body" value="/WEB-INF/views/users/register.jsp"/>

@@ -14,6 +14,7 @@
 <a href="${baseURL}/news">Головна</a>||
 <a href="${baseURL}/users/add">Зареєструватися</a>||
 <a href="${baseURL}/users/list">Користувачі</a>||
+<a href="${baseURL}/news/add">Додати новину</a>||
 ${logout}
 <sec:authorize access="isAnonymous()">
     <c:if test="${not empty error}">

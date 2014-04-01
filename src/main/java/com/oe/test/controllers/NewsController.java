@@ -31,9 +31,9 @@ public class NewsController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String listAll(ModelMap model, Principal principal) {
-        model.addAttribute("news", new News());
+       // model.addAttribute("news", new News());
         model.addAttribute("newsAll", newsService.getAllNews());
-        model.addAttribute("categoryAll", categoryService.getAllCategory());
+
         if (principal != null) {
             String name = principal.getName();
             model.addAttribute("username", name);
@@ -42,8 +42,15 @@ public class NewsController {
 
     }
 
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String addNews(ModelMap model) {
+
+        model.addAttribute("news", new News());
+        model.addAttribute("categoryAll", categoryService.getAllCategory());
+        return "addNews";
+    }
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addContact(@ModelAttribute("news")
+    public String addNewsDo(@ModelAttribute("news")
                              News news, BindingResult result, Principal principal) {
         String username = principal.getName();
         news.setUser(userService.getUserByUserName(username));
@@ -82,6 +89,7 @@ public class NewsController {
 
         return "redirect:/news";
     }
+
 
 
 }
