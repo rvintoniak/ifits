@@ -1,8 +1,10 @@
 package com.oe.test.dao;
 
 import com.oe.test.model.News;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,15 @@ public class NewsDao implements INewsDao {
     public List<News> getAllNews() {
         return this.sessionFactory.getCurrentSession().createQuery("from News")
                 .list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Transactional
+    public List<News> searchNews(String query) {
+        Criteria criteria = this.sessionFactory.getCurrentSession().createCriteria(News.class);
+        criteria.add(Restrictions.like("description", "%"+query+"%"));
+        return criteria.list();
     }
 
     @Override

@@ -10,24 +10,22 @@
 <head>
     <title>Інформаційний портал IFITS</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-   <%-- <style type="text/css">
-        div {
-            border: 2px solid;
-        }
-    </style>--%>
+    <c:set var="baseURL" value="${pageContext.request.contextPath}"/>
+    <script type="text/javascript" src="${baseURL}/resources/js/jquery.tools.min.js"></script>
+    <link href="${baseURL}/resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="${baseURL}/resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="${baseURL}/resources/css/mycss.css" rel="stylesheet">
+    <script type="text/javascript" src="${baseURL}/resources/bootstrap/js/bootstrap.js"></script>
+    <link href="${baseURL}/resources/datepik/datepicker.css" rel="stylesheet" type="text/css" />
+    <script src="${baseURL}/resources/datepik/bootstrap-datepicker.js"></script>
+    <script src="${baseURL}/resources/js/myjs.js"></script>
 </head>
 <body>
-<div id="header">
-    <div id="headerTitle"><tiles:insertAttribute name="header"/></div>
-</div>
-<div id="menu" style="border: 2px solid;">
     <tiles:insertAttribute name="menu"/>
-</div>
-<div id="content" >
-    <td><tiles:insertAttribute name="body"/>
-</div>
-<div id="footer">
-    <tiles:insertAttribute name="footer"/>
+<div class="container">
+    <tiles:insertAttribute name="slider"/>
+    <tiles:insertAttribute name="content"/>
+
 </div>
 </body>
 </html>

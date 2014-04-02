@@ -9,10 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -90,6 +87,12 @@ public class NewsController {
         return "redirect:/news";
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String search(@RequestParam(value="query", required=false) String query, ModelMap model) {
 
+        model.addAttribute("newsAll",newsService.searchNews(query));
+
+    return "news";
+    }
 
 }

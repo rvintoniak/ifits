@@ -15,6 +15,11 @@
 <a href="${baseURL}/users/add">Зареєструватися</a>||
 <a href="${baseURL}/users/list">Користувачі</a>||
 <a href="${baseURL}/news/add">Додати новину</a>||
+<form action="${baseURL}/news/search" method="get">
+    <input type="text" name="query" placeholder="Пошук"/>
+    <input type="submit" value="Знайти"/>
+</form>
+
 ${logout}
 <sec:authorize access="isAnonymous()">
     <c:if test="${not empty error}">
@@ -24,8 +29,7 @@ ${logout}
         </div>
     </c:if>
 
-    <form name='f' action="<c:url value='${baseURL}/j_spring_security_check' />"
-          method='POST'>
+    <form name='f' action="<c:url value='${baseURL}/j_spring_security_check' />" method='POST'>
         Логін: <input type='text' name='j_username' value=''>
         Пароль:<input type='password' name='j_password'/>
         <input name="submit" type="submit" value="ОК"/> <input name="reset" type="reset" value="скинути"/>

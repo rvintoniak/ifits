@@ -55,6 +55,11 @@ public class NewsService implements INewsService {
 
     }
 
+    @Override
+    public List<News> searchNews(String query) {
+        return iNewsDao.searchNews(query);
+    }
+
     public void setiNewsDao(INewsDao iNewsDao) {
         this.iNewsDao = iNewsDao;
     }

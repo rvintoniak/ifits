@@ -16,4 +16,6 @@ public interface INewsService {
     public News getNews(Integer id);
 
     public void updateNews(News news);
+
+    public List<News> searchNews(String query);
 }

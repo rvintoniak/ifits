@@ -7,30 +7,33 @@
 
     <!-- Default Main Template -->
     <definition name=".mainTemplate" template="/WEB-INF/views/main.jsp">
-        <put-attribute name="title" value="title" type="string"/>
-        <put-attribute name="header" value="header" type="string"/>
-        <put-attribute name="footer" value="footer" type="string"/>
-        <put-attribute name="menu" value="/WEB-INF/views/menu.jsp"/>
-        <put-attribute name="body" value=""/>
+        <put-attribute name="menu" value="/WEB-INF/views/menu_new.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="slider" value="/WEB-INF/views/slider.jsp"/>
     </definition>
 
     <definition name="news" extends=".mainTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/index.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/views/tabs.jsp"/>
     </definition>
     <definition name="editNews" extends=".mainTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/news/editNews.jsp"/>
+        <put-attribute name="slider" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/news/editNews.jsp"/>
     </definition>
     <definition name="addNews" extends=".mainTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/news/addNews.jsp"/>
+        <put-attribute name="slider" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/news/addNews.jsp"/>
     </definition>
     <definition name="addUser" extends=".mainTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/users/register.jsp"/>
+        <put-attribute name="slider" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/users/register.jsp"/>
     </definition>
     <definition name="listUsers" extends=".mainTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/users/listAll.jsp"/>
+        <put-attribute name="slider" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/users/listAll.jsp"/>
     </definition>
     <definition name="editUser" extends=".mainTemplate">
-        <put-attribute name="body" value="/WEB-INF/views/users/edit.jsp"/>
+        <put-attribute name="slider" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/users/edit.jsp"/>
     </definition>
 
 </tiles-definitions>
