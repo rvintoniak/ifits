@@ -15,7 +15,8 @@
     <table>
         <tr>
             <td>Логін</td>
-            <td><form:input path="login"/></td>
+            type="text" id="username" name="username" placeholder="" class="input-xlarge"
+            <td><form:input path="login" id="username" cssClass="input-xlarge"/></td>
         </tr>
         <tr>
             <td>Пароль</td>

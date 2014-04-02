@@ -1,6 +1,7 @@
 package com.oe.test.controllers;
 
 import com.oe.test.model.News;
+import com.oe.test.model.User;
 import com.oe.test.service.ICategoryService;
 import com.oe.test.service.INewsService;
 import com.oe.test.service.IUserService;
@@ -29,6 +30,7 @@ public class NewsController {
     @RequestMapping(method = RequestMethod.GET)
     public String listAll(ModelMap model, Principal principal) {
        // model.addAttribute("news", new News());
+        model.addAttribute("user", new User());
         model.addAttribute("newsAll", newsService.getAllNews());
 
         if (principal != null) {

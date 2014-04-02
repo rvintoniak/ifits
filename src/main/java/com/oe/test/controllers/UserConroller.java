@@ -20,13 +20,13 @@ public class UserConroller {
     private IUserService userService;
 
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String add(ModelMap model) {
 
         model.addAttribute("user", new User());
 
         return "addUser";
-    }
+    }*/
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addUser(@ModelAttribute("user")

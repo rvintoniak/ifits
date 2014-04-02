@@ -28,7 +28,7 @@ public class NewsDao implements INewsDao {
     @Override
     @Transactional
     public List<News> getAllNews() {
-        return this.sessionFactory.getCurrentSession().createQuery("from News")
+        return this.sessionFactory.getCurrentSession().createQuery("from News n order by n.id desc")
                 .list();
     }
 

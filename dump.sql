@@ -25,12 +25,13 @@ DROP TABLE IF EXISTS `news`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `news` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tittle` varchar(100) DEFAULT NULL,
-  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `description` text,
-  `user_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `USER_ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `USERNAME` varchar(45) NOT NULL,
+  `EMAIL` varchar(45) NOT NULL,
+  `PASSWORD` varchar(45) NOT NULL,
+  `PASSWORD2` varchar(45) NOT NULL,
+  `ENABLED` tinyint(1) NOT NULL,
+  `USERFULLNAME` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

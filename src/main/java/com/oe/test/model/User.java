@@ -16,14 +16,23 @@ public class User {
     @Column(name = "username")
     private String login;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "password")
     private String pass;
+
+    @Column(name = "password2")
+    private String pass2;
 
     @Column(name = "enabled")
     private Integer enabled = 1;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Role role;
+
+    @Column(name = "userfullname")
+    private String fullname;
 
     @OneToMany(targetEntity = News.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<News> news = new ArrayList<News>();
@@ -74,6 +83,30 @@ public class User {
 
     public void setEnabled(Integer enabled) {
         this.enabled = enabled;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getPass2() {
+        return pass2;
+    }
+
+    public void setPass2(String pass2) {
+        this.pass2 = pass2;
     }
 
 }
