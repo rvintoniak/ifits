@@ -81,10 +81,38 @@
             </div>
 
             <div class="control-group" id="passControlGroup">
-                <label class="control-label">Логін:</label>
+                <label class="control-label">Пароль:</label>
+
                 <div class="controls">
                     <form:password path="pass"/>
                     <span class="help-inline"><form:errors path="pass"/></span>
+                </div>
+            </div>
+
+            <div class="control-group" id="pass2ControlGroup">
+                <label class="control-label">Пароль(повторно):</label>
+
+                <div class="controls">
+                    <form:password path="pass2"/>
+                    <span class="help-inline"><form:errors path="pass2"/></span>
+                </div>
+            </div>
+
+            <div class="control-group" id="emailControlGroup">
+                <label class="control-label">E-mail:</label>
+
+                <div class="controls">
+                    <form:input path="email"/>
+                    <span class="help-inline"><form:errors path="email"/></span>
+                </div>
+            </div>
+
+            <div class="control-group" id="fullnameControlGroup">
+                <label class="control-label">Повне ім"я:</label>
+
+                <div class="controls">
+                    <form:input path="fullname"/>
+                    <span class="help-inline"><form:errors path="fullname"/></span>
                 </div>
             </div>
     </div>
@@ -110,7 +138,7 @@
             var $inputs = $form.find('input');
             var data = collectFormData($inputs);
 
-            $.post("${baseURL}/users/add", data, function(response) {
+            $.post("${baseURL}/users/addJson", data, function (response) {
                 $form.find('.control-group').removeClass('error');
                 $form.find('.help-inline').empty();
                 $form.find('.alert').remove();

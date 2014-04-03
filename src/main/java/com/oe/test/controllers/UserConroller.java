@@ -1,7 +1,6 @@
 package com.oe.test.controllers;
 
 import com.oe.test.common.ErrorMessage;
-import com.oe.test.common.JsonResponse;
 import com.oe.test.common.ValidationResponse;
 import com.oe.test.model.Role;
 import com.oe.test.model.User;
@@ -34,29 +33,25 @@ public class UserConroller {
         return "addUser";
     }*/
 
-    /*@RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addUser(@Valid @ModelAttribute("user")
                           User user, BindingResult result) {
 
-        if (result.hasErrors()) {
-            return "news";
-        }
-        user.setEnabled(1);
+        if (!result.hasErrors()) {
+
+            user.setEnabled(1);
         user.setRole(new Role("ROLE_USER", user));
         userService.addUser(user);
 
+        }
         return "redirect:/news";
-    }*/
+    }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/addJson", method = RequestMethod.POST)
     public @ResponseBody ValidationResponse addUser(Model model,@Valid @ModelAttribute("user")   User user, BindingResult result) {
 
         ValidationResponse res = new ValidationResponse();
-        System.out.println(result.hasErrors());
         if (!result.hasErrors()) {
-            user.setEnabled(1);
-            user.setRole(new Role("ROLE_USER", user));
-            userService.addUser(user);
             res.setStatus("SUCCESS");
             return res;
         }

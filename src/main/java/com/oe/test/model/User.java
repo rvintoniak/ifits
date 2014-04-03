@@ -20,7 +20,7 @@ public class User {
     private String login;
 
     @Column(name = "email")
-
+    @NotEmpty(message = "Заповніть поле!")
     private String email;
 
     @Column(name = "password")
@@ -28,7 +28,7 @@ public class User {
     private String pass;
 
     @Column(name = "password2")
-
+    @NotEmpty(message = "Заповніть поле!")
     private String pass2;
 
     @Column(name = "enabled")
@@ -38,7 +38,7 @@ public class User {
     private Role role;
 
     @Column(name = "userfullname")
-
+    @NotEmpty(message = "Заповніть поле!")
     private String fullname;
 
     @OneToMany(targetEntity = News.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
