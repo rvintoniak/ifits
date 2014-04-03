@@ -71,58 +71,65 @@
     </div>
     <div class="modal-body">
         <form:form class="form" action='${baseURL}/users/add' method="POST" id="regform" modelAttribute="user">
-        <div class="control-group">
-            <!-- Username -->
-            <form:label cssClass="control-label" for="username" path="login">Логін</form:label>
-            <div class="controls control-group error">
-                <form:input path="login" id="username" cssClass="input-xlarge"/>
-                <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+
+            <div class="control-group" id="loginControlGroup">
+                <label class="control-label">Логін:</label>
+                <div class="controls">
+                    <form:input path="login"/>
+                    <span class="help-inline"><form:errors path="login"/></span>
+                </div>
             </div>
-        </div>
 
-        <div class="control-group">
-            <!-- E-mail -->
-            <label class="control-label" for="email">E-mail</label>
-
-            <div class="controls">
-                <form:input id="email" path="email" placeholder="" cssClass="input-xlarge"/>
-                <p class="help-block">Please provide your E-mail</p>
+            <div class="control-group" id="passControlGroup">
+                <label class="control-label">Логін:</label>
+                <div class="controls">
+                    <form:password path="pass"/>
+                    <span class="help-inline"><form:errors path="pass"/></span>
+                </div>
             </div>
-        </div>
-
-        <div class="control-group">
-            <!-- Password-->
-            <form:label cssClass="control-label" for="password" path="pass">Пароль</form:label>
-            <div class="controls">
-                <form:password id="password" path="pass" placeholder="" cssClass="input-xlarge"/>
-                <p class="help-block">Password should be at least 4 characters</p>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <!-- Password -->
-            <label class="control-label" for="password_confirm">Пароль (повторно)</label>
-
-            <div class="controls">
-                <form:password id="password_confirm" path="pass2" placeholder="" cssClass="input-xlarge"/>
-                <p class="help-block">Please confirm password</p>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <!-- FULLNAME -->
-            <label class="control-label" for="fullname">Повне ім"я</label>
-
-            <div class="controls">
-                <form:input id="fullname" path="fullname" placeholder="" cssClass="input-xlarge"/>
-                <p class="help-block">Please provide your E-mail</p>
-            </div>
-        </div>
-
     </div>
     <div class="modal-footer">
         <a href="#" class="btn" data-dismiss="modal">Close</a>
-        <a href="#" class="btn btn-info" onclick="document.getElementById('regform').submit();">register</a>
+        <button type="submit" class="btn btn-primary">Save changes</button>
         </form:form>
     </div>
 </div>
+<script>
+    function collectFormData(fields) {
+        var data = {};
+        for (var i = 0; i < fields.length; i++) {
+            var $item = $(fields[i]);
+            data[$item.attr('name')] = $item.val();
+        }
+        return data;
+    }
+    $(document).ready(function() {
+        var $form = $('#regform');
+        $form.bind('submit', function(e) {
+            // Ajax validation
+            var $inputs = $form.find('input');
+            var data = collectFormData($inputs);
+
+            $.post("${baseURL}/users/add", data, function(response) {
+                $form.find('.control-group').removeClass('error');
+                $form.find('.help-inline').empty();
+                $form.find('.alert').remove();
+
+                if (response.status == 'FAIL') {
+                    for (var i = 0; i < response.errorMessageList.length; i++) {
+                        var item = response.errorMessageList[i];
+                        var $controlGroup = $('#' + item.fieldName + 'ControlGroup');
+                        $controlGroup.addClass('error');
+                        $controlGroup.find('.help-inline').html(item.message);
+                    }
+                } else {
+                    $form.unbind('submit');
+                    $form.submit();
+                }
+            }, 'json');
+
+            e.preventDefault();
+            return false;
+        });
+    });
+</script>

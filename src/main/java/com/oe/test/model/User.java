@@ -1,5 +1,7 @@
 package com.oe.test.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +16,19 @@ public class User {
     private Integer id;
 
     @Column(name = "username")
+    @NotEmpty(message = "Заповніть поле!")
     private String login;
 
     @Column(name = "email")
+
     private String email;
 
     @Column(name = "password")
+    @NotEmpty(message = "Заповніть поле!")
     private String pass;
 
     @Column(name = "password2")
+
     private String pass2;
 
     @Column(name = "enabled")
@@ -32,6 +38,7 @@ public class User {
     private Role role;
 
     @Column(name = "userfullname")
+
     private String fullname;
 
     @OneToMany(targetEntity = News.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

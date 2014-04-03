@@ -19,6 +19,7 @@
     <link href="${baseURL}/resources/datepik/datepicker.css" rel="stylesheet" type="text/css" />
     <script src="${baseURL}/resources/datepik/bootstrap-datepicker.js"></script>
     <script src="${baseURL}/resources/js/myjs.js"></script>
+    <%--<script src="${baseURL}/resources/js/roma.js"></script>--%>
 </head>
 <body>
     <tiles:insertAttribute name="menu"/>

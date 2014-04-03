@@ -1,16 +1,22 @@
 package com.oe.test.controllers;
 
+import com.oe.test.common.ErrorMessage;
+import com.oe.test.common.JsonResponse;
+import com.oe.test.common.ValidationResponse;
 import com.oe.test.model.Role;
 import com.oe.test.model.User;
 import com.oe.test.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("/users")
 @Controller
@@ -28,14 +34,40 @@ public class UserConroller {
         return "addUser";
     }*/
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute("user")
+    /*@RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String addUser(@Valid @ModelAttribute("user")
                           User user, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "news";
+        }
         user.setEnabled(1);
         user.setRole(new Role("ROLE_USER", user));
         userService.addUser(user);
 
         return "redirect:/news";
+    }*/
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public @ResponseBody ValidationResponse addUser(Model model,@Valid @ModelAttribute("user")   User user, BindingResult result) {
+
+        ValidationResponse res = new ValidationResponse();
+        System.out.println(result.hasErrors());
+        if (!result.hasErrors()) {
+            user.setEnabled(1);
+            user.setRole(new Role("ROLE_USER", user));
+            userService.addUser(user);
+            res.setStatus("SUCCESS");
+            return res;
+        }
+        res.setStatus("FAIL");
+        List<FieldError> allErrors = result.getFieldErrors();
+        List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
+        for (FieldError objectError : allErrors) {
+            errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getField() + "  " + objectError.getDefaultMessage()));
+        }
+        res.setErrorMessageList(errorMesages);
+        return res;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
