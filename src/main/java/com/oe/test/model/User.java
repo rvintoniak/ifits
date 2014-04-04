@@ -1,5 +1,7 @@
 package com.oe.test.model;
 
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -7,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",uniqueConstraints = {@UniqueConstraint(columnNames ="username")})
+
 public class User {
 
     @Id
@@ -15,12 +18,14 @@ public class User {
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "username")
+    @Column(name = "username",unique = true)
     @NotEmpty(message = "Заповніть поле!")
+    @NaturalId (mutable = false)
     private String login;
 
     @Column(name = "email")
     @NotEmpty(message = "Заповніть поле!")
+    @Email(message = "невірний емейл")
     private String email;
 
     @Column(name = "password")

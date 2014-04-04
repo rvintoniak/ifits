@@ -1,6 +1,7 @@
 package com.oe.test.controllers;
 
 import com.oe.test.common.ErrorMessage;
+import com.oe.test.common.JsonResponse;
 import com.oe.test.common.ValidationResponse;
 import com.oe.test.model.Role;
 import com.oe.test.model.User;
@@ -25,14 +26,6 @@ public class UserConroller {
     private IUserService userService;
 
 
-   /* @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String add(ModelMap model) {
-
-        model.addAttribute("user", new User());
-
-        return "addUser";
-    }*/
-
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addUser(@Valid @ModelAttribute("user")
                           User user, BindingResult result) {
@@ -40,8 +33,8 @@ public class UserConroller {
         if (!result.hasErrors()) {
 
             user.setEnabled(1);
-        user.setRole(new Role("ROLE_USER", user));
-        userService.addUser(user);
+            user.setRole(new Role("ROLE_USER", user));
+            userService.addUser(user);
 
         }
         return "redirect:/news";
@@ -50,20 +43,28 @@ public class UserConroller {
     @RequestMapping(value = "/addJson", method = RequestMethod.POST)
     public @ResponseBody ValidationResponse addUser(Model model,@Valid @ModelAttribute("user")   User user, BindingResult result) {
 
+        System.out.println(user.getId());
         ValidationResponse res = new ValidationResponse();
-        if (!result.hasErrors()) {
-            res.setStatus("SUCCESS");
-            return res;
-        }
+        User us = userService.getUserByUserName(user.getLogin());
+
+       //new user
+        if ((us == null) ||(us.getId() == user.getId()))
+            if (!result.hasErrors()) {
+                res.setStatus("SUCCESS");
+                return res;
+            }
+
         res.setStatus("FAIL");
         List<FieldError> allErrors = result.getFieldErrors();
         List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
         for (FieldError objectError : allErrors) {
             errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getField() + "  " + objectError.getDefaultMessage()));
         }
+        if(us!=null) errorMesages.add(new ErrorMessage("login","Користувач існує"));
         res.setErrorMessageList(errorMesages);
         return res;
     }
+
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editUser(@PathVariable("id") Integer id, ModelMap model) {

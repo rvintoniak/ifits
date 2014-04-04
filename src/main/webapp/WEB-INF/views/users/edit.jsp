@@ -25,6 +25,18 @@
             <td><form:input path="pass"/></td>
         </tr>
         <tr>
+            <td>Пароль(повторно):</td>
+            <td><form:input path="pass2"/></td>
+        </tr>
+        <tr>
+            <td>e-mail:</td>
+            <td><form:input path="email"/></td>
+        </tr>
+        <tr>
+            <td>Повне ім"я:</td>
+            <td><form:input path="fullname"/></td>
+        </tr>
+        <tr>
             <td>Роль</td>
             <td><form:select path="role.authority">
                 <form:option value="ROLE_ADMIN" label="ADMIN"/>
