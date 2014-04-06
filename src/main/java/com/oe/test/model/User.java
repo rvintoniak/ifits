@@ -1,5 +1,6 @@
 package com.oe.test.model;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -86,7 +87,7 @@ public class User {
     }
 
     public void setPass(String pass) {
-        this.pass = pass;
+        this.pass = DigestUtils.md5Hex(pass);
     }
 
     public Integer getEnabled() {

@@ -7,7 +7,7 @@
 	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
 
     <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/**" access="permitAll"/>
+        <intercept-url pattern="/*" access="permitAll"/>
         <form-login login-page="/news"
                     default-target-url="/news"
                     authentication-failure-url="/loginfailed"/>
@@ -16,7 +16,7 @@
 
     <authentication-manager>
         <authentication-provider>
-            <!-- 	   <password-encoder hash="md5" /> -->
+            <password-encoder hash="md5"/>
             <jdbc-user-service data-source-ref="dataSource"
 
                                users-by-username-query="

@@ -1,7 +1,6 @@
 package com.oe.test.controllers;
 
 import com.oe.test.common.ErrorMessage;
-import com.oe.test.common.JsonResponse;
 import com.oe.test.common.ValidationResponse;
 import com.oe.test.model.Role;
 import com.oe.test.model.User;
@@ -47,18 +46,17 @@ public class UserConroller {
         ValidationResponse res = new ValidationResponse();
         User us = userService.getUserByUserName(user.getLogin());
 
-       //new user
-        if ((us == null) ||(us.getId() == user.getId()))
-            if (!result.hasErrors()) {
-                res.setStatus("SUCCESS");
+        //if user not exists and valid
+        if ((us == null) && (!result.hasErrors())) {
+            res.setStatus("SUCCESS");
                 return res;
-            }
-
+        }
+        //if user exists or not valid
         res.setStatus("FAIL");
         List<FieldError> allErrors = result.getFieldErrors();
         List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
         for (FieldError objectError : allErrors) {
-            errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getField() + "  " + objectError.getDefaultMessage()));
+            errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getDefaultMessage()));
         }
         if(us!=null) errorMesages.add(new ErrorMessage("login","Користувач існує"));
         res.setErrorMessageList(errorMesages);
@@ -75,9 +73,11 @@ public class UserConroller {
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-    public String editUser(@ModelAttribute("user") User user, @PathVariable("id") Integer id) {
-        System.out.println(user.getRole().getAuthority());
-        System.out.println(user.getRole().getUser_id());
+    public String editUser(@Valid @ModelAttribute("user") User user, BindingResult result, @PathVariable("id") Integer id, ModelMap model) {
+
+        if (result.hasErrors()) {
+            return "editUser";
+        }
         userService.updateUser(user);
 
         return "redirect:/news";

@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td>Опис новини</td>
-            <td><form:input path="description"/></td>
+            <td><form:textarea path="description" cssStyle="margin: 2px; width: 404px; height: 215px;"/></td>
         </tr>
         <tr>
             <td>Категорія</td>

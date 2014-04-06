@@ -41,6 +41,7 @@ public class NewsController {
 
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addNews(ModelMap model) {
 
@@ -48,6 +49,8 @@ public class NewsController {
         model.addAttribute("categoryAll", categoryService.getAllCategory());
         return "addNews";
     }
+
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addNewsDo(@ModelAttribute("news")
                              News news, BindingResult result, Principal principal) {
@@ -59,18 +62,17 @@ public class NewsController {
         return "redirect:/news";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping("/delete/{id}")
     public String deleteContact(@PathVariable("id")
                                 Integer id) {
 
         newsService.deleteNews(id);
-        ;
 
         return "redirect:/news";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editNews(@PathVariable("id") Integer id, ModelMap model) {
 
@@ -80,7 +82,7 @@ public class NewsController {
         return "editNews";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String editNewsDo(@ModelAttribute("news") News news, @PathVariable("id") Integer id) {
 

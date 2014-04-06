@@ -19,6 +19,7 @@ public class UserDao implements IUserDao {
     @Override
     @Transactional
     public void addUser(User user) {
+
         this.sessionFactory.getCurrentSession().save(user);
 
     }
