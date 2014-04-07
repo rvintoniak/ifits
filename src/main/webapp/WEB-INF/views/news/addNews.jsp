@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>Додати новину:</h1>
-    <form:form method="post" action="${baseURL}/news/add" modelAttribute="news">
+    <form:form method="post" action="${baseURL}/news/add" modelAttribute="news" enctype="multipart/form-data">
 
         <table>
             <tr>
@@ -28,6 +28,11 @@
                         <form:options items="${categoryAll}"/>
                     </form:select>
                 </td>
+            </tr>
+            <tr>
+                <td>файл</td>
+                <td><input type="file" name="file" id="file" accept="image/*" /></td>
+
             </tr>
             <tr>
                 <td colspan="2">

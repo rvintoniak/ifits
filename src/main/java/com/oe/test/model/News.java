@@ -1,6 +1,9 @@
 package com.oe.test.model;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import javax.persistence.*;
+import java.sql.Blob;
 import java.util.Date;
 
 @Entity
@@ -28,6 +31,37 @@ public class News {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    private String filename;
+
+    @Lob
+    private Blob file;
+
+    private String contentType;
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public Blob getFile() {
+        return file;
+    }
+
+    public void setFile(Blob file) {
+        this.file = file;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
     public Category getCategory() {
         return category;

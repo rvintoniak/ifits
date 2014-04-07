@@ -3,6 +3,7 @@ package com.oe.test.service;
 import com.oe.test.model.News;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.util.List;
 
 @Service
@@ -18,4 +19,6 @@ public interface INewsService {
     public void updateNews(News news);
 
     public List<News> searchNews(String query);
+
+    public InputStream getInputStream(Integer id);
 }

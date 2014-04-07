@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -64,5 +67,14 @@ public class NewsService implements INewsService {
         this.iNewsDao = iNewsDao;
     }
 
-
+    public InputStream getInputStream(Integer id){
+        Blob buffer = getNews(id).getFile();
+        InputStream in1 = null;
+        try {
+            in1 = buffer.getBinaryStream();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return in1;
+    }
 }

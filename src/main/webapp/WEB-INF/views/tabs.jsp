@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="span3">
                         <a href="#" class="thumbnail">
-                            <img src="${baseURL}/resources/img/2.jpg" alt="">
+                            <img src="${baseURL}/news/getImage/<c:out value="${news.id}"/>" alt="">
                         </a>
 
                         <div class="span2 btnRead">

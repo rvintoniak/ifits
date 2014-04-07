@@ -10,7 +10,7 @@
 </head>
 <body>
 <h4>Edit news</h4>
-<form:form method="POST" action="${baseURL}/news/edit/${news.id}" commandName="news">
+<form:form method="POST" action="${baseURL}/news/edit/${news.id}" commandName="news" enctype="multipart/form-data">
     <form:hidden path="id"/>
     <form:hidden path="user.id"/>
     <table>
@@ -29,6 +29,10 @@
                     <form:options items="${categoryAll}"/>
                 </form:select>
             </td>
+        </tr>
+        <tr>
+            <td>Файл</td>
+            <td><input type="file" name="file" id="file" /></td>
         </tr>
         <tr>
             <td colspan="2">
