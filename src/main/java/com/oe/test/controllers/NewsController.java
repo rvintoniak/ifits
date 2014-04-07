@@ -5,26 +5,22 @@ import com.oe.test.model.User;
 import com.oe.test.service.ICategoryService;
 import com.oe.test.service.INewsService;
 import com.oe.test.service.IUserService;
-import org.apache.commons.io.IOUtils;
-import org.hibernate.Hibernate;
-import org.hibernate.type.descriptor.java.BinaryStreamImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.Principal;
-import java.sql.Blob;
-import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/news")
@@ -38,6 +34,14 @@ public class NewsController {
 
     @Autowired
     private ICategoryService categoryService;
+
+    @InitBinder
+    protected void initBinder(HttpServletRequest request,
+                              ServletRequestDataBinder binder) throws ServletException {
+        binder.registerCustomEditor(byte[].class,
+                new ByteArrayMultipartFileEditor());
+
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String listAll(ModelMap model, Principal principal) {
@@ -65,9 +69,14 @@ public class NewsController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addNewsDo(@ModelAttribute("news")  News news, BindingResult result,
-                            @RequestParam("file") MultipartFile file, Principal principal) {
+                            @RequestParam("file") MultipartFile file, Principal principal, ModelMap model) {
         String username = principal.getName();
         news.setUser(userService.getUserByUserName(username));
+        newsService.fileValidator(result, file);
+        if (result.hasErrors()) {
+            model.addAttribute("categoryAll", categoryService.getAllCategory());
+            return "addNews";
+        }
         setBlob(news, file);
         newsService.addNews(news);
 
@@ -97,12 +106,17 @@ public class NewsController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-    public String editNewsDo(@ModelAttribute("news") News news,BindingResult result, @PathVariable("id") Integer id,@RequestParam("file") MultipartFile file) {
-        System.out.println(file.getName());
+    public String editNewsDo(@ModelAttribute("news") News news, BindingResult result,
+                             @PathVariable("id") Integer id, @RequestParam("file") MultipartFile file, ModelMap model) {
         if(file.isEmpty()){
             news.setFile(newsService.getNews(id).getFile());
             news.setFilename(newsService.getNews(id).getFilename());
         } else{
+            newsService.fileValidator(result, file);
+            if (result.hasErrors()) {
+                model.addAttribute("categoryAll", categoryService.getAllCategory());
+                return "editNews";
+            }
             setBlob(news, file);
         }
         newsService.updateNews(news);
@@ -119,16 +133,21 @@ public class NewsController {
     }
 
     @RequestMapping(value="/getImage/{id}")
-    public void getUserImage(HttpServletResponse response , @PathVariable("id") int id) throws IOException{
+    public String getUserImage(HttpServletResponse response, @PathVariable("id") int id) throws IOException {
 
-        response.setContentType(newsService.getNews(id).getContentType());
-
-        IOUtils.copy(newsService.getInputStream(id), response.getOutputStream());
+        byte[] file = newsService.getNews(id).getFile();
+        try {
+            OutputStream out = response.getOutputStream();
+            out.write(file);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+        }
+        return null;
     }
-
     private void setBlob(News news, MultipartFile file) {
         try {
-            Blob blob = Hibernate.createBlob(file.getInputStream());
+            byte[] blob = file.getBytes();
             news.setFilename(file.getOriginalFilename());
             news.setContentType(file.getContentType());
             news.setFile(blob);

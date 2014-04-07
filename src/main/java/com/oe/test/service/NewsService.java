@@ -6,10 +6,9 @@ import com.oe.test.model.News;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -63,18 +62,13 @@ public class NewsService implements INewsService {
         return iNewsDao.searchNews(query);
     }
 
-    public void setiNewsDao(INewsDao iNewsDao) {
-        this.iNewsDao = iNewsDao;
-    }
-
-    public InputStream getInputStream(Integer id){
-        Blob buffer = getNews(id).getFile();
-        InputStream in1 = null;
-        try {
-            in1 = buffer.getBinaryStream();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void fileValidator(BindingResult result, MultipartFile file) {
+        int maxlenght = 5 * 1024 * 1024;//5mb
+        if (file.getSize() != 0) {
+            if (!file.getContentType().startsWith("image/"))
+                result.rejectValue("file", "file.error.onlyimage", "Тільки картинки");
         }
-        return in1;
+        if (file.getSize() > maxlenght)
+            result.rejectValue("file", "file.error.maxsize", "файл > 5mb");
     }
 }

@@ -1,9 +1,6 @@
 package com.oe.test.model;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import javax.persistence.*;
-import java.sql.Blob;
 import java.util.Date;
 
 @Entity
@@ -35,7 +32,7 @@ public class News {
     private String filename;
 
     @Lob
-    private Blob file;
+    private byte[] file;
 
     private String contentType;
 
@@ -47,11 +44,11 @@ public class News {
         this.contentType = contentType;
     }
 
-    public Blob getFile() {
+    public byte[] getFile() {
         return file;
     }
 
-    public void setFile(Blob file) {
+    public void setFile(byte[] file) {
         this.file = file;
     }
 

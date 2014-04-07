@@ -2,8 +2,9 @@ package com.oe.test.service;
 
 import com.oe.test.model.News;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.util.List;
 
 @Service
@@ -20,5 +21,6 @@ public interface INewsService {
 
     public List<News> searchNews(String query);
 
-    public InputStream getInputStream(Integer id);
+    public void fileValidator(BindingResult result, MultipartFile file);
+
 }

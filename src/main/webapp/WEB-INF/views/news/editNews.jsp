@@ -32,7 +32,8 @@
         </tr>
         <tr>
             <td>Файл</td>
-            <td><input type="file" name="file" id="file" /></td>
+            <td><form:input type="file" path="file" id="file" accept="image/*"/></td>
+            <td><form:errors path="file" id="file"/></td>
         </tr>
         <tr>
             <td colspan="2">
