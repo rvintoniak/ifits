@@ -23,7 +23,7 @@
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
                         <li><a href="${baseURL}/users/list">Користувачі</a></li>
                     </sec:authorize>
-                    <li><a href="#about">Література</a></li>
+                    <li><a href="${baseURL}/category">Категорії</a></li>
                     <sec:authorize access="isAuthenticated()">
                         <li><a href="${baseURL}/news/add">Добавити новину</a></li>
                     </sec:authorize>

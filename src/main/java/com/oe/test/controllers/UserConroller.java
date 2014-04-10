@@ -74,7 +74,6 @@ public class UserConroller {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String editUser(@Valid @ModelAttribute("user") User user, BindingResult result, @PathVariable("id") Integer id, ModelMap model) {
-
         if (result.hasErrors()) {
             return "editUser";
         }

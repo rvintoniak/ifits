@@ -1,5 +1,7 @@
 package com.oe.test.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class Category {
     @GeneratedValue
     private Integer id;
 
+    @NotBlank(message = "Порожняк!")
     private String name;
 
     @OneToMany(mappedBy = "category")

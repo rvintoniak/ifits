@@ -45,7 +45,6 @@ public class NewsController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String listAll(ModelMap model, Principal principal) {
-       // model.addAttribute("news", new News());
         model.addAttribute("user", new User());
         model.addAttribute("newsAll", newsService.getAllNews());
 

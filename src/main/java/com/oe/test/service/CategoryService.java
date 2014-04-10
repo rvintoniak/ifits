@@ -5,6 +5,7 @@ import com.oe.test.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -16,7 +17,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void addCategory(Category category) {
-
+        categoryDao.addCategory(category);
     }
 
     @Override
@@ -26,16 +27,21 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public void deleteCategory(Integer id) {
-
+        categoryDao.deleteCategory(id);
     }
 
     @Override
     public Category getCategory(Integer id) {
-        return null;
+        return categoryDao.getCategory(id);
     }
 
     @Override
     public void updateCategory(Category category) {
+        categoryDao.updateCategory(category);
+    }
 
+    @Override
+    public List<Category> getAllCategoryList() {
+        return categoryDao.getAllCategoryList();
     }
 }

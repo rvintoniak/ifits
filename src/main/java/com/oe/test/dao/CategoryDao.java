@@ -33,7 +33,6 @@ public class CategoryDao implements ICategoryDao {
         for (Category c : categories) map.put(c.getId(), c.getName());
         return map;
     }
-
     @Override
     @Transactional
     public void deleteCategory(Integer id) {
@@ -61,6 +60,12 @@ public class CategoryDao implements ICategoryDao {
 
         this.sessionFactory.getCurrentSession().update(category);
 
+    }
+    @SuppressWarnings("unchecked")
+    @Override
+    @Transactional
+    public List<Category> getAllCategoryList() {
+        return this.sessionFactory.getCurrentSession().createQuery("from Category").list();
     }
 
 
