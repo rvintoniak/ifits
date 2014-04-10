@@ -1,7 +1,6 @@
 package com.oe.test.dao;
 
 import com.oe.test.model.News;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,5 +17,7 @@ public interface INewsDao {
     public News getNews(Integer id);
 
     public void updateNews(News news);
+
+    public List<News> getNewsByCategory(String category);
 
 }

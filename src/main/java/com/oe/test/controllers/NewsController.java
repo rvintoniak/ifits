@@ -47,11 +47,13 @@ public class NewsController {
     public String listAll(ModelMap model, Principal principal) {
         model.addAttribute("user", new User());
         model.addAttribute("newsAll", newsService.getAllNews());
+        model.addAttribute("tags", categoryService.getAllCategoryTags());
 
         if (principal != null) {
             String name = principal.getName();
             model.addAttribute("username", name);
         }
+
         return "news";
 
     }
@@ -129,6 +131,19 @@ public class NewsController {
         model.addAttribute("newsAll",newsService.searchNews(query));
 
     return "news";
+    }
+
+    @RequestMapping(value = "/tag/{category}", method = RequestMethod.GET)
+    public String getNewsByCategory(@PathVariable("category") String category, ModelMap model, Principal principal) {
+
+        model.addAttribute("newsAll", newsService.getNewsByCategory(category));
+        model.addAttribute("user", new User());
+        model.addAttribute("tags", categoryService.getAllCategoryTags());
+        if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("username", name);
+        }
+        return "news";
     }
 
     @RequestMapping(value="/getImage/{id}")

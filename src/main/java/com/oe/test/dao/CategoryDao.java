@@ -2,6 +2,7 @@ package com.oe.test.dao;
 
 import com.oe.test.model.Category;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -66,6 +67,16 @@ public class CategoryDao implements ICategoryDao {
     @Transactional
     public List<Category> getAllCategoryList() {
         return this.sessionFactory.getCurrentSession().createQuery("from Category").list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Transactional
+    public List<Object[]> getAllCategoryTags() {
+        String sql = "select c.name, count(*) from News n inner join n.category c  group by c.name";
+        Query query = this.sessionFactory.getCurrentSession().createQuery(sql);
+
+        return query.list();
     }
 
 

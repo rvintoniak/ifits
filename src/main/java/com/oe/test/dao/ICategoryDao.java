@@ -20,4 +20,7 @@ public interface ICategoryDao {
     public void updateCategory(Category category);
 
     public List<Category> getAllCategoryList();
+
+    public List<Object[]> getAllCategoryTags();
+
 }

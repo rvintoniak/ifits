@@ -23,4 +23,6 @@ public interface INewsService {
 
     public void fileValidator(BindingResult result, MultipartFile file);
 
+    public List<News> getNewsByCategory(String category);
+
 }

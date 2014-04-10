@@ -44,4 +44,9 @@ public class CategoryService implements ICategoryService {
     public List<Category> getAllCategoryList() {
         return categoryDao.getAllCategoryList();
     }
+
+    @Override
+    public List<Object[]> getAllCategoryTags() {
+        return categoryDao.getAllCategoryTags();
+    }
 }

@@ -71,4 +71,9 @@ public class NewsService implements INewsService {
         if (file.getSize() > maxlenght)
             result.rejectValue("file", "file.error.maxsize", "файл > 5mb");
     }
+
+    @Override
+    public List<News> getNewsByCategory(String category) {
+        return iNewsDao.getNewsByCategory(category);
+    }
 }
