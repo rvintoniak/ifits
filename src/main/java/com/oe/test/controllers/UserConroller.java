@@ -36,7 +36,7 @@ public class UserConroller {
             userService.addUser(user);
 
         }
-        return "redirect:/news";
+        return "redirect:/index";
     }
 
     @RequestMapping(value = "/addJson", method = RequestMethod.POST)
@@ -79,7 +79,7 @@ public class UserConroller {
         }
         userService.updateUser(user);
 
-        return "redirect:/news";
+        return "redirect:/index";
     }
 
 
@@ -89,13 +89,13 @@ public class UserConroller {
 
         userService.deleteUser(id);
 
-        return "redirect:/news";
+        return "redirect:/index";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listAll(ModelMap model) {
 
-        userService.getUserById(1);
+       // userService.getUserById(1);
         model.addAttribute("usersAll", userService.getAllUsers());
 
         return "listUsers";

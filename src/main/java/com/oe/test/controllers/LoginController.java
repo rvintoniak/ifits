@@ -25,14 +25,14 @@ public class LoginController {
     public String loginerror(ModelMap model, final RedirectAttributes redirectAttributes) {
 
         redirectAttributes.addFlashAttribute("error", "true");
-        return "redirect:/news";
+        return "redirect:/index";
 
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(final RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("logout", "Ви вийшли!");
-        return "redirect:/news";
+        return "redirect:/index";
 
     }
 

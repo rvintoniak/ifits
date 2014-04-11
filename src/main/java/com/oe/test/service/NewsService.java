@@ -62,7 +62,7 @@ public class NewsService implements INewsService {
         return iNewsDao.searchNews(query);
     }
 
-    public void fileValidator(BindingResult result, MultipartFile file) {
+    public  void  fileValidator(BindingResult result, MultipartFile file) {
         int maxlenght = 5 * 1024 * 1024;//5mb
         if (file.getSize() != 0) {
             if (!file.getContentType().startsWith("image/"))

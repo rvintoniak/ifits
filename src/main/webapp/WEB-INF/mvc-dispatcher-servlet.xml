@@ -81,5 +81,7 @@
     <bean id="UserService" class="com.oe.test.service.UserService"></bean>
     <bean id="CategoryDAO" class="com.oe.test.dao.CategoryDao"></bean>
     <bean id="CategoryService" class="com.oe.test.service.CategoryService"></bean>
+    <bean id="EventsDAO" class="com.oe.test.dao.EventsDao"></bean>
+    <bean id="EventsService" class="com.oe.test.service.EventsService"></bean>
 
 </beans>

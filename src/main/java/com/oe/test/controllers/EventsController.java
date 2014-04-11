@@ -1,15 +1,19 @@
 package com.oe.test.controllers;
 
+import com.oe.test.model.Event;
 import com.oe.test.model.News;
 import com.oe.test.model.User;
 import com.oe.test.service.ICategoryService;
+import com.oe.test.service.IEventsService;
 import com.oe.test.service.INewsService;
 import com.oe.test.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,50 +25,52 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
-@RequestMapping("/news")
-public class NewsController {
+@RequestMapping("/events")
+public class EventsController {
 
     @Autowired
-    private INewsService newsService;
+    private IEventsService eventsService;
 
     @Autowired
     private IUserService userService;
-
-    @Autowired
-    private ICategoryService categoryService;
 
     @InitBinder
     protected void initBinder(HttpServletRequest request,
                               ServletRequestDataBinder binder) throws ServletException {
         binder.registerCustomEditor(byte[].class,
                 new ByteArrayMultipartFileEditor());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
+        binder.registerCustomEditor(Date.class, editor);
 
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addNews(ModelMap model) {
+    public String add(ModelMap model) {
 
-        model.addAttribute("news", new News());
-        model.addAttribute("categoryAll", categoryService.getAllCategory());
-        return "addNews";
+        model.addAttribute("event", new Event());
+        return "addEvent";
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addNewsDo(@ModelAttribute("news")  News news, BindingResult result,
+    public String addDo(@ModelAttribute("event")  Event event, BindingResult result,
                             @RequestParam("file") MultipartFile file, Principal principal, ModelMap model) {
         String username = principal.getName();
-        news.setUser(userService.getUserByUserName(username));
-        newsService.fileValidator(result, file);
+        event.setUser(userService.getUserByUserName(username));
+        //eventsService.fileValidator(result, file);
         if (result.hasErrors()) {
-            model.addAttribute("categoryAll", categoryService.getAllCategory());
-            return "addNews";
+            for(ObjectError e :result.getAllErrors())
+            System.out.println(e.getObjectName()+" "+ e.getDefaultMessage());
+            return "addEvent";
         }
-        setBlob(news, file);
-        newsService.addNews(news);
+        setBlob(event, file);
+        eventsService.add(event);
 
         return "redirect:/index";
     }
@@ -73,68 +79,45 @@ public class NewsController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/delete/{id}")
-    public String deleteContact(@PathVariable("id") Integer id) {
+    public String delete(@PathVariable("id") Integer id) {
 
-        newsService.deleteNews(id);
+        eventsService.delete(id);
 
         return "redirect:/index";
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editNews(@PathVariable("id") Integer id, ModelMap model) {
+    public String edit(@PathVariable("id") Integer id, ModelMap model) {
 
-        model.addAttribute("news", newsService.getNews(id));
-        model.addAttribute("categoryAll", categoryService.getAllCategory());
+        model.addAttribute("event", eventsService.get(id));
 
-        return "editNews";
+        return "editEvent";
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-    public String editNewsDo(@ModelAttribute("news") News news, BindingResult result,
+    public String editDo(@ModelAttribute("event") Event event, BindingResult result,
                              @PathVariable("id") Integer id, @RequestParam("file") MultipartFile file, ModelMap model) {
         if(file.isEmpty()){
-            news.setFile(newsService.getNews(id).getFile());
-            news.setFilename(newsService.getNews(id).getFilename());
+            event.setFile(eventsService.get(id).getFile());
         } else{
-            newsService.fileValidator(result, file);
+            eventsService.fileValidator(result, file);
             if (result.hasErrors()) {
-                model.addAttribute("categoryAll", categoryService.getAllCategory());
-                return "editNews";
+                return "editEvent";
             }
-            setBlob(news, file);
+            setBlob(event, file);
         }
-        newsService.updateNews(news);
+        eventsService.update(event);
 
         return "redirect:/index";
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(@RequestParam(value="query", required=false) String query, ModelMap model) {
-
-        model.addAttribute("newsAll",newsService.searchNews(query));
-
-    return "index";
-    }
-
-    @RequestMapping(value = "/tag/{category}", method = RequestMethod.GET)
-    public String getNewsByCategory(@PathVariable("category") String category, ModelMap model, Principal principal) {
-
-        model.addAttribute("newsAll", newsService.getNewsByCategory(category));
-        model.addAttribute("user", new User());
-        model.addAttribute("tags", categoryService.getAllCategoryTags());
-        if (principal != null) {
-            String name = principal.getName();
-            model.addAttribute("username", name);
-        }
-        return "index";
-    }
 
     @RequestMapping(value="/getImage/{id}")
     public String getUserImage(HttpServletResponse response, @PathVariable("id") int id) throws IOException {
 
-        byte[] file = newsService.getNews(id).getFile();
+        byte[] file = eventsService.get(id).getFile();
         try {
             OutputStream out = response.getOutputStream();
             out.write(file);
@@ -144,12 +127,10 @@ public class NewsController {
         }
         return null;
     }
-    private void setBlob(News news, MultipartFile file) {
+    private void setBlob(Event event, MultipartFile file) {
         try {
             byte[] blob = file.getBytes();
-            news.setFilename(file.getOriginalFilename());
-            news.setContentType(file.getContentType());
-            news.setFile(blob);
+            event.setFile(blob);
         } catch (IOException e) {
             e.printStackTrace();
         }

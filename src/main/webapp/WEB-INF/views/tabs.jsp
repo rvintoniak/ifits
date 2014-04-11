@@ -32,7 +32,6 @@
                 </ul>
             </div>
         </div>
-        <!-- <div class="well">-->
         <div class="span9">
             <c:forEach var="news" items="${newsAll}">
                 <div class="well">
@@ -59,9 +58,9 @@
                             <sec:authentication var="principal" property="principal"/>
                             <c:if test="${principal.username==news.user.login}">
                                 <div style="float: right;">
-                                    <a href="news/edit/${news.id}" class="btn btn-success btn-mini"><i
+                                    <a href="${baseURL}/news/edit/${news.id}" class="btn btn-success btn-mini"><i
                                             class="icon-pencil"></i>редагувати</a>
-                                    <a href="news/delete/${news.id}" class="btn btn-danger btn-mini"><i
+                                    <a href="${baseURL}/news/delete/${news.id}" class="btn btn-danger btn-mini"><i
                                             class="icon-trash"></i>видалити</a>
                                 </div>
                             </c:if>
@@ -79,36 +78,30 @@
         </div>
         <!-- <div class="well">-->
         <div class="span9">
+        <c:forEach var="event" items="${events}">
             <div class="well">
                 <div class="row-fluid">
                     <div class="span2" style="width: 90px;">
-                        <img src="img/itStudents.jpg" alt="" class="attachment-post-thumbnail wp-post-image" alt=""
+                        <img src="${baseURL}/events/getImage/<c:out value="${event.id}"/>" alt="" class="attachment-post-thumbnail wp-post-image" alt=""
                              width="90" height="96">
                     </div>
                     <div class="span10">
-                        <h3 class="title-post-name"><a style="text-decoration: none;" href="http://devcolibri.com/4137">Зустріч</a>
+                        <h3 class="title-post-name"><a style="text-decoration: none;" href="http://devcolibri.com/4137">${event.tittle}</a>
                         </h3>
 
-                        <p class="post-name-info">Івано-Франківськ, вул. Чорновола 22</p>
+                        <p class="post-name-info">${event.address}</p>
                         <a style="text-decoration: none;" href="#">
-                            <span class="label label-success">16.04.2014</span>
+                            <span class="label label-success"><fmt:formatDate value="${event.dateStart}" pattern="dd.MM.yyyy"/></span>
                         </a>
                     </div>
                 </div>
-                <p>Привіт, у нас стартує серія зустрічей і всіх вас запрошуємо, буде цікаво та інформативно.
-                    Перша зустріч 13 березня.
-
-                    В нас також змінилось місце зустрічі, тому будемо чекати вас на
-                    вул. Гарбарській 22 на 8 поверсі у новому Конференц залі.
-
-                    Приходьте самі та беріть друзів )))
-                    Реєстрація:
-                </p>
+                <p>${event.description}</p>
                 <legend></legend>
                 <div class="buttom-post-info">
-                    <i class="icon-time"></i> 02.04.2014
+                    <i class="icon-time"></i> <fmt:formatDate value="${event.dateCreate}" pattern="dd.MM.yyyy"/>
                 </div>
             </div>
+            </c:forEach>
         </div>
     </div>
     <div class="tab-pane" id="books">

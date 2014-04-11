@@ -9,5 +9,6 @@
         <mapping class="com.oe.test.model.Role"></mapping>
         <mapping class="com.oe.test.model.User"></mapping>
         <mapping class="com.oe.test.model.Category"></mapping>
+        <mapping class="com.oe.test.model.Event"></mapping>
     </session-factory>
 </hibernate-configuration>

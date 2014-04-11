@@ -12,10 +12,11 @@
         <put-attribute name="slider" value="/WEB-INF/views/slider.jsp"/>
     </definition>
 
-    <!--NEWS-->
-    <definition name="news" extends=".mainTemplate">
+    <definition name="index" extends=".mainTemplate">
         <put-attribute name="content" value="/WEB-INF/views/tabs.jsp"/>
     </definition>
+
+    <!--NEWS-->
     <definition name="editNews" extends=".mainTemplate">
         <put-attribute name="slider" value=""/>
         <put-attribute name="content" value="/WEB-INF/views/news/editNews.jsp"/>
@@ -43,5 +44,15 @@
     <definition name="listCategory" extends=".mainTemplate">
         <put-attribute name="slider" value=""/>
         <put-attribute name="content" value="/WEB-INF/views/category/list.jsp"/>
+    </definition>
+
+    <!--EVENTS-->
+    <definition name="editEvent" extends=".mainTemplate">
+        <put-attribute name="slider" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/events/editEvent.jsp"/>
+    </definition>
+    <definition name="addEvent" extends=".mainTemplate">
+        <put-attribute name="slider" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/events/addEvent.jsp"/>
     </definition>
 </tiles-definitions>

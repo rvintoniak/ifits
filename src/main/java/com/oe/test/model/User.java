@@ -50,6 +50,9 @@ public class User {
     @OneToMany(targetEntity = News.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<News> news = new ArrayList<News>();
 
+    @OneToMany(targetEntity = Event.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Event> events = new ArrayList<Event>();
+
     public List<News> getNews() {
         return news;
     }
