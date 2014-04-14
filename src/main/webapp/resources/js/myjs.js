@@ -1,8 +1,4 @@
-jQuery(document).ready(function () {
-    var myDate = {
-        date1: {dat: new Date('04/16/2014'), title: "зустріч", url: "sylka"},
-    }
-
+function datePicker(myDate) {
     $('#datepicker').datepicker({
         todayHighlight: true,
         beforeShowDay: function (d) {
@@ -12,10 +8,11 @@ jQuery(document).ready(function () {
                 if (d.getTime() == myDate[index].dat.getTime()) {
                     var c = 'active';
                     var title = myDate[index].title;
+                    var url = myDate[index].url;
                     return {
                         classes: c,
                         tooltip: title,
-                        urlEvent: 'http://www.tsn.ua'
+                        urlEvent: url
                     }
                 }
 
@@ -28,6 +25,9 @@ jQuery(document).ready(function () {
 
         }
     });
+};
+jQuery(document).ready(function () {
+
     $("#rate2").rating("#", {maxvalue: 5, curvalue: 0});
     $('#tabs').tab();
 //            <li class="active"><a href="#red" data-toggle="tab">Новини</a></li>

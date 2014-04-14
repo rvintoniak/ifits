@@ -30,6 +30,11 @@
         <put-attribute name="content" value="/WEB-INF/views/news/addNews.jsp"/>
     </definition>
 
+    <definition name="viewNews" extends=".mainTemplate">
+        <put-attribute name="slider" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/news/view.jsp"/>
+    </definition>
+
     <!--USERS-->
     <definition name="addUser" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/users/register.jsp"/>
@@ -52,5 +57,10 @@
     </definition>
     <definition name="addEvent" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/events/addEvent.jsp"/>
+    </definition>
+
+    <definition name="viewEvent" extends=".mainTemplate">
+        <put-attribute name="slider" value=""/>
+        <put-attribute name="content" value="/WEB-INF/views/events/view.jsp"/>
     </definition>
 </tiles-definitions>

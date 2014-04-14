@@ -3,6 +3,7 @@ package com.oe.test.controllers;
 import com.oe.test.model.News;
 import com.oe.test.model.User;
 import com.oe.test.service.ICategoryService;
+import com.oe.test.service.IEventsService;
 import com.oe.test.service.INewsService;
 import com.oe.test.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class NewsController {
 
     @Autowired
     private ICategoryService categoryService;
+
+    @Autowired
+    private IEventsService eventsService;
 
     @InitBinder
     protected void initBinder(HttpServletRequest request,
@@ -127,6 +131,7 @@ public class NewsController {
         model.addAttribute("newsAll", newsService.getNewsByCategory(category));
         model.addAttribute("user", new User());
         model.addAttribute("tags", categoryService.getAllCategoryTags());
+        model.addAttribute("events", eventsService.getAll());
         if (principal != null) {
             String name = principal.getName();
             model.addAttribute("username", name);
@@ -146,6 +151,20 @@ public class NewsController {
         } catch (IOException e) {
         }
         return null;
+    }
+
+
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public String viewNews(@PathVariable("id") Integer id, ModelMap model, Principal principal) {
+
+        model.addAttribute("news", newsService.getNews(id));
+        model.addAttribute("user", new User());
+        if (principal != null) {
+            String name = principal.getName();
+            model.addAttribute("username", name);
+        }
+
+        return "viewNews";
     }
 
     private void setBlob(News news, MultipartFile file) {

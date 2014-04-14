@@ -1,6 +1,7 @@
 package com.oe.test.controllers;
 
 import com.oe.test.model.Event;
+import com.oe.test.model.User;
 import com.oe.test.service.IEventsService;
 import com.oe.test.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,6 @@ public class EventsController {
     }
 
 
-
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id) {
@@ -98,9 +98,9 @@ public class EventsController {
     public String editDo(@Valid @ModelAttribute("event") Event event, BindingResult result,
                          @PathVariable("id") Integer id, @RequestParam("file") MultipartFile file, ModelMap model) {
 
-        if(file.isEmpty()){
+        if (file.isEmpty()) {
             event.setFile(eventsService.get(id).getFile());
-        } else{
+        } else {
             eventsService.fileValidator(result, file);
             if (result.hasErrors()) {
                 model.addAttribute("active", "addEvent");
@@ -114,7 +114,7 @@ public class EventsController {
     }
 
 
-    @RequestMapping(value="/getImage/{id}")
+    @RequestMapping(value = "/getImage/{id}")
     public String getUserImage(HttpServletResponse response, @PathVariable("id") int id) throws IOException {
 
         byte[] file = eventsService.get(id).getFile();
@@ -127,6 +127,15 @@ public class EventsController {
         }
         return null;
     }
+
+    @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+    public String viewNews(@PathVariable("id") Integer id, ModelMap model, Principal principal) {
+
+        model.addAttribute("event", eventsService.get(id));
+        model.addAttribute("user", new User());
+        return "viewEvent";
+    }
+
     private void setBlob(Event event, MultipartFile file) {
         try {
             byte[] blob = file.getBytes();

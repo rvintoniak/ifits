@@ -14,7 +14,6 @@
 </ul>
 <div id="my-tab-content" class="tab-content">
     <div class="tab-pane active" id="articles">
-
         <div class="span3 fix leftNews">
             <div class="well">
                 <ul class="nav nav-tabs nav-stacked">
@@ -42,7 +41,8 @@
                         </div>
                         <div class="span10">
                             <h3 class="title-post-name"><a style="text-decoration: none;"
-                                                           href="http://devcolibri.com/4137">${news.tittle}</a></h3>
+                                                           href="${baseURL}/news/view/${news.id}">${news.tittle}</a>
+                            </h3>
 
                             <p class="post-name-info">Автор: ${news.user.firstname} ${news.user.lastname}</p>
                             <a style="text-decoration: none;" href="#">
@@ -76,6 +76,14 @@
                 <div id="datepicker"></div>
             </div>
         </div>
+        <script>
+            var myDate = {
+                <c:forEach var="event" items="${events}">
+                date${event.id}: {dat: new Date('${event.dateStart}'), title: "${event.tittle}", url: "${baseURL}/events/view/${event.id}"},
+                </c:forEach>
+            }
+            datePicker(myDate);
+        </script>
         <div class="span9">
             <c:forEach var="event" items="${events}">
                 <div class="well">
@@ -87,13 +95,14 @@
                         </div>
                         <div class="span10">
                             <h3 class="title-post-name"><a style="text-decoration: none;"
-                                                           href="http://devcolibri.com/4137">${event.tittle}</a>
+                                                           href="${baseURL}/events/view/${event.id}">${event.tittle}</a>
                             </h3>
 
                             <p class="post-name-info">${event.address}</p>
                             <a style="text-decoration: none;" href="#">
-                                <span class="label label-success"><fmt:formatDate value="${event.dateStart}"
-                                                                                  pattern="dd.MM.yyyy"/></span>
+                                <span class="label label-success"><i
+                                        class="icon-white icon-calendar"></i> <fmt:formatDate value="${event.dateStart}"
+                                                                                              pattern="dd.MM.yyyy"/> ${event.timeStart}</span>
                             </a>
                         </div>
                     </div>

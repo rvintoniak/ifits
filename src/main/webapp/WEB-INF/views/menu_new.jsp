@@ -15,7 +15,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#">PORTAL</a>
+            <a class="brand" href="${baseURL}/index">PORTAL</a>
 
             <div class="nav-collapse collapse">
                 <ul class="nav">
