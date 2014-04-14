@@ -1,0 +1,19 @@
+.leftNews {
+    margin-left: 0;
+}
+
+#adminContent:before {
+    height: 50px;
+}
+
+.leftPanel {
+    background: linear-gradient(to right, #3a3633 93%, #2a2725 100%);
+}
+
+#adminContent .span8 .well {
+    display: none;
+}
+
+/*.addChart,.addEvent,.addBook,.addBook,.myProfile,.users,.addCategory{
+	display: none;
+}*/

@@ -44,7 +44,7 @@
                             <h3 class="title-post-name"><a style="text-decoration: none;"
                                                            href="http://devcolibri.com/4137">${news.tittle}</a></h3>
 
-                            <p class="post-name-info">Автор: ${news.user.login}</p>
+                            <p class="post-name-info">Автор: ${news.user.firstname} ${news.user.lastname}</p>
                             <a style="text-decoration: none;" href="#">
                                 <span class="label label-success">${news.category.name}</span>
                             </a>
@@ -76,31 +76,41 @@
                 <div id="datepicker"></div>
             </div>
         </div>
-        <!-- <div class="well">-->
         <div class="span9">
-        <c:forEach var="event" items="${events}">
-            <div class="well">
-                <div class="row-fluid">
-                    <div class="span2" style="width: 90px;">
-                        <img src="${baseURL}/events/getImage/<c:out value="${event.id}"/>" alt="" class="attachment-post-thumbnail wp-post-image" alt=""
-                             width="90" height="96">
-                    </div>
-                    <div class="span10">
-                        <h3 class="title-post-name"><a style="text-decoration: none;" href="http://devcolibri.com/4137">${event.tittle}</a>
-                        </h3>
+            <c:forEach var="event" items="${events}">
+                <div class="well">
+                    <div class="row-fluid">
+                        <div class="span2" style="width: 90px;">
+                            <img src="${baseURL}/events/getImage/<c:out value="${event.id}"/>" alt=""
+                                 class="attachment-post-thumbnail wp-post-image" alt=""
+                                 width="90" height="96">
+                        </div>
+                        <div class="span10">
+                            <h3 class="title-post-name"><a style="text-decoration: none;"
+                                                           href="http://devcolibri.com/4137">${event.tittle}</a>
+                            </h3>
 
-                        <p class="post-name-info">${event.address}</p>
-                        <a style="text-decoration: none;" href="#">
-                            <span class="label label-success"><fmt:formatDate value="${event.dateStart}" pattern="dd.MM.yyyy"/></span>
-                        </a>
+                            <p class="post-name-info">${event.address}</p>
+                            <a style="text-decoration: none;" href="#">
+                                <span class="label label-success"><fmt:formatDate value="${event.dateStart}"
+                                                                                  pattern="dd.MM.yyyy"/></span>
+                            </a>
+                        </div>
+                    </div>
+                    <p>${event.description}</p>
+                    <legend></legend>
+                    <div class="buttom-post-info">
+                        <i class="icon-time"></i> <fmt:formatDate value="${event.dateCreate}" pattern="dd.MM.yyyy"/>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <div style="float: right;">
+                                <a href="${baseURL}/events/edit/${event.id}" class="btn btn-success btn-mini"><i
+                                        class="icon-pencil"></i>редагувати</a>
+                                <a href="${baseURL}/events/delete/${event.id}" class="btn btn-danger btn-mini"><i
+                                        class="icon-trash"></i>видалити</a>
+                            </div>
+                        </sec:authorize>
                     </div>
                 </div>
-                <p>${event.description}</p>
-                <legend></legend>
-                <div class="buttom-post-info">
-                    <i class="icon-time"></i> <fmt:formatDate value="${event.dateCreate}" pattern="dd.MM.yyyy"/>
-                </div>
-            </div>
             </c:forEach>
         </div>
     </div>
@@ -186,7 +196,23 @@
     <div class="modal-body">
         <form:form class="form" action='${baseURL}/users/add' method="POST" id="regform" modelAttribute="user">
 
-        <div class="control-group" id="loginControlGroup">
+            <div class="control-group" id="firstnameControlGroup">
+                <label class="control-label">Ім'я:</label>
+
+                <div class="controls">
+                    <form:input path="firstname"/>
+                    <span class="help-inline"><form:errors path="firstname"/></span>
+                </div>
+            </div>
+            <div class="control-group" id="lastnameControlGroup">
+                <label class="control-label">Прізвище:</label>
+
+                <div class="controls">
+                    <form:input path="lastname"/>
+                    <span class="help-inline"><form:errors path="lastname"/></span>
+                </div>
+            </div>
+            <div class="control-group" id="loginControlGroup">
             <label class="control-label">Логін:</label>
 
             <div class="controls">
@@ -222,14 +248,7 @@
             </div>
         </div>
 
-        <div class="control-group" id="fullnameControlGroup">
-            <label class="control-label">Повне ім"я:</label>
 
-            <div class="controls">
-                <form:input path="fullname"/>
-                <span class="help-inline"><form:errors path="fullname"/></span>
-            </div>
-        </div>
     </div>
     <div class="modal-footer">
         <a href="#" class="btn" data-dismiss="modal">Close</a>

@@ -15,25 +15,32 @@
 <div class="carousel slide" id="MyCarousel" data-ride="carousel">
     <div class="carousel-inner">
         <div class="item active">
-            <img src="${baseURL}/resources/img/22.jpg"/>
+            <img src="${baseURL}/resources/img/brends/main.jpg"/>
+
             <div class="carousel-caption">
                 <h4>заголовок слайда</h4>
-                <p>слайд слайд слайд слайд слайд</p>
             </div>
 
         </div>
         <div class="item">
-            <img src="${baseURL}/resources/img/22.jpg"/>
+            <img src="${baseURL}/resources/img/brends/softserve.jpg"/>
+
             <div class="carousel-caption">
                 <h4>заголовок слайда</h4>
-                <p>слайд слайд слайд слайд слайд</p>
             </div>
         </div>
         <div class="item">
-            <img src="${baseURL}/resources/img/22.jpg"/>
+            <img src="${baseURL}/resources/img/brends/eleks.jpg"/>
+
             <div class="carousel-caption">
                 <h4>заголовок слайда</h4>
-                <p>слайд слайд слайд слайд слайд</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="${baseURL}/resources/img/brends/softjourn.png"/>
+
+            <div class="carousel-caption">
+                <h4>заголовок слайда</h4>
             </div>
         </div>
     </div>

@@ -12,21 +12,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <c:set var="baseURL" value="${pageContext.request.contextPath}"/>
     <script type="text/javascript" src="${baseURL}/resources/js/jquery.tools.min.js"></script>
-    <link href="${baseURL}/resources/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="${baseURL}/resources/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="${baseURL}/resources/css/mycss.css" rel="stylesheet">
-    <script type="text/javascript" src="${baseURL}/resources/bootstrap/js/bootstrap.js"></script>
-    <link href="${baseURL}/resources/datepik/datepicker.css" rel="stylesheet" type="text/css" />
-    <script src="${baseURL}/resources/datepik/bootstrap-datepicker.js"></script>
+    <link href="${baseURL}/resources/widget/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="${baseURL}/resources/widget/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="${baseURL}/resources/css/main.css" rel="stylesheet">
+    <script type="text/javascript" src="${baseURL}/resources/widget/bootstrap/js/bootstrap.js"></script>
+    <link href="${baseURL}/resources/widget/datepik/datepicker.css" rel="stylesheet" type="text/css"/>
+    <script src="${baseURL}/resources/widget/datepik/bootstrap-datepicker.js"></script>
+    <link href="${baseURL}/resources/widget/rating/rating.css" rel="stylesheet">
+    <script src="${baseURL}/resources/widget/rating/jquery.rating.js"></script>
     <script src="${baseURL}/resources/js/myjs.js"></script>
-    <%--<script src="${baseURL}/resources/js/roma.js"></script>--%>
 </head>
 <body>
     <tiles:insertAttribute name="menu"/>
-<div class="container">
+    <div class="container" style="margin-top: 61px;">
     <tiles:insertAttribute name="slider"/>
     <tiles:insertAttribute name="content"/>
-
 </div>
 </body>
 </html>

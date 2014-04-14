@@ -11,48 +11,46 @@
         <put-attribute name="content" value=""/>
         <put-attribute name="slider" value="/WEB-INF/views/slider.jsp"/>
     </definition>
+    <!-- Default Admin Template -->
+    <definition name=".adminTemplate" template="/WEB-INF/views/main2.jsp">
+        <put-attribute name="menu" value="/WEB-INF/views/menu_new.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="leftmenu" value="/WEB-INF/views/admin/admin_menu.jsp"/>
+    </definition>
 
     <definition name="index" extends=".mainTemplate">
         <put-attribute name="content" value="/WEB-INF/views/tabs.jsp"/>
     </definition>
 
     <!--NEWS-->
-    <definition name="editNews" extends=".mainTemplate">
-        <put-attribute name="slider" value=""/>
+    <definition name="editNews" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/news/editNews.jsp"/>
     </definition>
-    <definition name="addNews" extends=".mainTemplate">
-        <put-attribute name="slider" value=""/>
+    <definition name="addNews" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/news/addNews.jsp"/>
     </definition>
 
     <!--USERS-->
-    <definition name="addUser" extends=".mainTemplate">
-        <put-attribute name="slider" value=""/>
+    <definition name="addUser" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/users/register.jsp"/>
     </definition>
-    <definition name="listUsers" extends=".mainTemplate">
-        <put-attribute name="slider" value=""/>
+    <definition name="listUsers" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/users/listAll.jsp"/>
     </definition>
-    <definition name="editUser" extends=".mainTemplate">
-        <put-attribute name="slider" value=""/>
+    <definition name="editUser" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/users/edit.jsp"/>
     </definition>
 
     <!--CAREGORIES-->
-    <definition name="listCategory" extends=".mainTemplate">
-        <put-attribute name="slider" value=""/>
+    <definition name="listCategory" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/category/list.jsp"/>
     </definition>
 
     <!--EVENTS-->
-    <definition name="editEvent" extends=".mainTemplate">
-        <put-attribute name="slider" value=""/>
+    <definition name="editEvent" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/events/editEvent.jsp"/>
     </definition>
-    <definition name="addEvent" extends=".mainTemplate">
-        <put-attribute name="slider" value=""/>
+    <definition name="addEvent" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/events/addEvent.jsp"/>
     </definition>
 </tiles-definitions>

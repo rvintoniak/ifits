@@ -48,17 +48,19 @@ public class NewsController {
     public String addNews(ModelMap model) {
 
         model.addAttribute("news", new News());
+        model.addAttribute("active", "addChart");
         model.addAttribute("categoryAll", categoryService.getAllCategory());
         return "addNews";
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addNewsDo(@ModelAttribute("news")  News news, BindingResult result,
+    public String addNewsDo(@ModelAttribute("news") News news, BindingResult result,
                             @RequestParam("file") MultipartFile file, Principal principal, ModelMap model) {
         String username = principal.getName();
         news.setUser(userService.getUserByUserName(username));
         newsService.fileValidator(result, file);
+        model.addAttribute("active", "addChart");
         if (result.hasErrors()) {
             model.addAttribute("categoryAll", categoryService.getAllCategory());
             return "addNews";
@@ -68,7 +70,6 @@ public class NewsController {
 
         return "redirect:/index";
     }
-
 
 
     @PreAuthorize("isAuthenticated()")
@@ -85,6 +86,7 @@ public class NewsController {
     public String editNews(@PathVariable("id") Integer id, ModelMap model) {
 
         model.addAttribute("news", newsService.getNews(id));
+        model.addAttribute("active", "addChart");
         model.addAttribute("categoryAll", categoryService.getAllCategory());
 
         return "editNews";
@@ -94,10 +96,11 @@ public class NewsController {
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String editNewsDo(@ModelAttribute("news") News news, BindingResult result,
                              @PathVariable("id") Integer id, @RequestParam("file") MultipartFile file, ModelMap model) {
-        if(file.isEmpty()){
+        model.addAttribute("active", "addChart");
+        if (file.isEmpty()) {
             news.setFile(newsService.getNews(id).getFile());
             news.setFilename(newsService.getNews(id).getFilename());
-        } else{
+        } else {
             newsService.fileValidator(result, file);
             if (result.hasErrors()) {
                 model.addAttribute("categoryAll", categoryService.getAllCategory());
@@ -111,11 +114,11 @@ public class NewsController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(@RequestParam(value="query", required=false) String query, ModelMap model) {
+    public String search(@RequestParam(value = "query", required = false) String query, ModelMap model) {
 
-        model.addAttribute("newsAll",newsService.searchNews(query));
+        model.addAttribute("newsAll", newsService.searchNews(query));
 
-    return "index";
+        return "index";
     }
 
     @RequestMapping(value = "/tag/{category}", method = RequestMethod.GET)
@@ -131,7 +134,7 @@ public class NewsController {
         return "index";
     }
 
-    @RequestMapping(value="/getImage/{id}")
+    @RequestMapping(value = "/getImage/{id}")
     public String getUserImage(HttpServletResponse response, @PathVariable("id") int id) throws IOException {
 
         byte[] file = newsService.getNews(id).getFile();
@@ -144,6 +147,7 @@ public class NewsController {
         }
         return null;
     }
+
     private void setBlob(News news, MultipartFile file) {
         try {
             byte[] blob = file.getBytes();

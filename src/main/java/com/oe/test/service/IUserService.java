@@ -2,6 +2,7 @@ package com.oe.test.service;
 
 import com.oe.test.model.User;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 
@@ -16,9 +17,11 @@ public interface IUserService {
 
     public User getUserById(Integer id);
 
-    void updateUser(User user);
+    public void updateUser(User user);
 
     public User getUserByUserName(String username);
+
+    public void validatePassEquals(User user, BindingResult result);
 
 
 }

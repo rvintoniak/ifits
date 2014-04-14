@@ -1,6 +1,6 @@
 package com.oe.test.model;
 
-import org.apache.commons.codec.digest.DigestUtils;
+
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users",uniqueConstraints = {@UniqueConstraint(columnNames ="username")})
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 
 public class User {
 
@@ -19,9 +19,9 @@ public class User {
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "username",unique = true)
+    @Column(name = "username", unique = true)
     @NotEmpty(message = "Заповніть поле!")
-    @NaturalId (mutable = false)
+    @NaturalId(mutable = false)
     private String login;
 
     @Column(name = "email")
@@ -43,9 +43,13 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Role role;
 
-    @Column(name = "userfullname")
+    @Column(name = "firstname")
     @NotEmpty(message = "Заповніть поле!")
-    private String fullname;
+    private String firstname;
+
+    @Column(name = "lastname")
+    @NotEmpty(message = "Заповніть поле!")
+    private String lastname;
 
     @OneToMany(targetEntity = News.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<News> news = new ArrayList<News>();
@@ -90,7 +94,7 @@ public class User {
     }
 
     public void setPass(String pass) {
-        this.pass = DigestUtils.md5Hex(pass);
+        this.pass = pass;
     }
 
     public Integer getEnabled() {
@@ -109,12 +113,28 @@ public class User {
         this.email = email;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     public String getPass2() {

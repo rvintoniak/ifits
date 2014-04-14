@@ -18,6 +18,9 @@ public class News {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "text")
+    private String text;
+
     @Column(name = "date", insertable = false, updatable = false)
     private Date date = new Date();
 
@@ -106,5 +109,13 @@ public class News {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

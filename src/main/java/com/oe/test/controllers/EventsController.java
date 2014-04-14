@@ -1,11 +1,7 @@
 package com.oe.test.controllers;
 
 import com.oe.test.model.Event;
-import com.oe.test.model.News;
-import com.oe.test.model.User;
-import com.oe.test.service.ICategoryService;
 import com.oe.test.service.IEventsService;
-import com.oe.test.service.INewsService;
 import com.oe.test.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -13,7 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +17,7 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.Principal;
@@ -54,19 +50,20 @@ public class EventsController {
     public String add(ModelMap model) {
 
         model.addAttribute("event", new Event());
+        model.addAttribute("active", "addEvent");
         return "addEvent";
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addDo(@ModelAttribute("event")  Event event, BindingResult result,
-                            @RequestParam("file") MultipartFile file, Principal principal, ModelMap model) {
+    public String addDo(@Valid @ModelAttribute("event") Event event, BindingResult result,
+                        @RequestParam("file") MultipartFile file, Principal principal, ModelMap model) {
         String username = principal.getName();
         event.setUser(userService.getUserByUserName(username));
-        //eventsService.fileValidator(result, file);
+        model.addAttribute("active", "addEvent");
         if (result.hasErrors()) {
-            for(ObjectError e :result.getAllErrors())
-            System.out.println(e.getObjectName()+" "+ e.getDefaultMessage());
+            /*for(ObjectError e :result.getAllErrors())
+            System.out.println(e.getObjectName()+" "+ e.getDefaultMessage());*/
             return "addEvent";
         }
         setBlob(event, file);
@@ -91,19 +88,22 @@ public class EventsController {
     public String edit(@PathVariable("id") Integer id, ModelMap model) {
 
         model.addAttribute("event", eventsService.get(id));
+        model.addAttribute("active", "addEvent");
 
         return "editEvent";
     }
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-    public String editDo(@ModelAttribute("event") Event event, BindingResult result,
-                             @PathVariable("id") Integer id, @RequestParam("file") MultipartFile file, ModelMap model) {
+    public String editDo(@Valid @ModelAttribute("event") Event event, BindingResult result,
+                         @PathVariable("id") Integer id, @RequestParam("file") MultipartFile file, ModelMap model) {
+
         if(file.isEmpty()){
             event.setFile(eventsService.get(id).getFile());
         } else{
             eventsService.fileValidator(result, file);
             if (result.hasErrors()) {
+                model.addAttribute("active", "addEvent");
                 return "editEvent";
             }
             setBlob(event, file);

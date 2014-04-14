@@ -11,22 +11,35 @@
     <title>Insert title here</title>
 </head>
 <body>
-<h3>Користувачі</h3>
-<table>
-    <c:forEach var="user" items="${usersAll}" varStatus="iter">
+
+<div class="well users">
+    <table class="table">
+        <thead>
         <tr>
-            <td align="center">${user[0].id}</td>
-            <td align="center">${user[0].login}</td>
-            <td align="center">${user[0].pass}</td>
-            <td align="center">${user[0].enabled}</td>
-            <td align="center">${user[1].authority}</td>
-            <sec:authorize access="hasRole('ROLE_ADMIN')">
-                <td><a href="${baseURL}/users/delete/${user[0].id}"
-                       onclick="return confirm('Ви впевнені?')">видалити</a></td>
-                <td><a href="${baseURL}/users/edit/${user[0].id}">редагувати</a></td>
-            </sec:authorize>
+            <th>#</th>
+            <th>Імя</th>
+            <th>Прізвище</th>
+            <th>Логін</th>
+            <th></th>
+            <th></th>
         </tr>
-    </c:forEach>
-</table>
+        </thead>
+        <tbody>
+        <c:forEach var="user" items="${usersAll}" varStatus="iter">
+            <tr>
+                <td>${user[0].id}</td>
+                <td>${user[0].firstname}</td>
+                <td>${user[0].lastname}</td>
+                <td>${user[0].login}</td>
+                <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <td><a href="${baseURL}/users/edit/${user[0].id}"><i class="icon-pencil"></i></a></td>
+                    <td><a href="${baseURL}/users/delete/${user[0].id}" onclick="return confirm('Ви впевнені?')"><i
+                            class="icon-remove"></i></a></td>
+                </sec:authorize>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

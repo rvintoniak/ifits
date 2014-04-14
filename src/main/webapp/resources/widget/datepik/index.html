@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="bootstrap-datepicker.js"></script>
+    <link rel="stylesheet" href="datepicker3.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style type="text/css">
+        .my-date {
+            background-color: #f276da;
+        }
+    </style>
+</head>
+<body>
+<input type="text" type="text" class="form-control">
+
+<script>
+    jQuery(document).ready(function () {
+        var myDate = new Date('04/24/2014');
+        $('input').datepicker({
+            todayHighlight: true,
+            beforeShowDay: function (d) {
+                var c = '';
+                if (myDate.getTime() == d.getTime()) {
+                    c = 'my-date';
+                }
+                return {
+                    classes: c
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -20,16 +20,10 @@
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     <li class="active"><a href="${baseURL}/index">Головна</a></li>
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">
-                        <li><a href="${baseURL}/users/list">Користувачі</a></li>
-                    </sec:authorize>
-                    <li><a href="${baseURL}/category">Категорії</a></li>
                     <sec:authorize access="isAuthenticated()">
-                        <li><a href="${baseURL}/news/add">Добавити новину</a></li>
+                        <li><a href="${baseURL}/news/add">Моє меню</a></li>
                     </sec:authorize>
-                    <sec:authorize access="isAuthenticated()">
-                        <li><a href="${baseURL}/events/add">Добавити подію</a></li>
-                    </sec:authorize>
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Про нас<b class="caret"></b></a>
                         <ul class="dropdown-menu">

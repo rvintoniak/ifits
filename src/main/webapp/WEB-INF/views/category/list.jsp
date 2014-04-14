@@ -12,54 +12,46 @@
     <title></title>
 </head>
 <body>
-<h3>Категої</h3>
-<c:choose>
-    <c:when test="${method=='edit'}">
-           <h4>Редагування</h4>
-           <form:form method="post" action="${baseURL}/category/edit/${category.id}" modelAttribute="category">
-            <form:hidden path="id" />
-               <table>
-                <tr>
-                    <td>Назва категорії</td>
-                    <td><form:input path="name"/></td>
-                    <td><form:errors path="name" id="name"/></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="submit" value="Зберегти"/>
-                    </td>
-                </tr>
-            </table>
+<div class="well addCategory">
+    <c:choose>
+        <c:when test="${method=='edit'}">
+            <h4>Редагування</h4>
+            <form:form method="post" action="${baseURL}/category/edit/${category.id}" modelAttribute="category"
+                       cssClass="navbar-form">
+                <form:hidden path="id"/>
+                <form:input path="name" placeholder="редагувати категорію" cssClass="input-xlarge"/>
+                <input type="submit" class="btn btn-info" value="Зберегти"/>
+                <form:errors path="name" id="name"/>
             </form:form>
         </c:when>
-    <c:otherwise>
-        <h4>Додати</h4>
-        <form:form method="post" action="${baseURL}/category/add" modelAttribute="category">
-            <table>
+        <c:otherwise>
+            <h4>Додати</h4>
+            <form:form method="post" action="${baseURL}/category/add" modelAttribute="category" cssClass="navbar-form">
+                <form:input path="name" placeholder="добавити категорію" cssClass="input-xlarge"/>
+                <input type="submit" class="btn btn-info" value="Додати"/>
+                <form:errors path="name" id="name"/>
+            </form:form>
+            <table class="table">
+                <thead>
                 <tr>
-                    <td>Назва категорії</td>
-                    <td><form:input path="name"/></td>
-                    <td><form:errors path="name" id="name"/></td>
+                    <th>#</th>
+                    <th>назва</th>
+                    <th></th>
+                    <th></th>
                 </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="submit" value="Додати"/>
-                    </td>
-                </tr>
+                </thead>
+                <c:forEach var="category" items="${categoryAllList}">
+                    <tr>
+                        <td>${category.id}</td>
+                        <td>${category.name}</td>
+                        <td><a href="${baseURL}/category/edit/${category.id}"><i class="icon-pencil"></i></a></td>
+                        <td><a href="${baseURL}/category/delete/${category.id}"><i class="icon-remove"></i></a></td>
+                    </tr>
+                </c:forEach>
             </table>
-        </form:form>
-    </c:otherwise>
+        </c:otherwise>
     </c:choose>
-<table>
-    <c:forEach var="category"  items="${categoryAllList}">
-        <tr>
-            <td>${category.id}</td>
-            <td>${category.name}</td>
-            <td><a href="${baseURL}/category/edit/${category.id}">edit</a></td>
-            <td><a href="${baseURL}/category/delete/${category.id}">delete</a></td>
-        </tr>
-    </c:forEach>
-</table>
-<a href="${baseURL}/news">на головну</a>
+
+</div>
 </body>
 </html>
