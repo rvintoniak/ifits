@@ -1,10 +1,10 @@
 package com.oe.test.controllers;
 
 import com.oe.test.model.User;
+import com.oe.test.service.IBooksService;
 import com.oe.test.service.ICategoryService;
 import com.oe.test.service.IEventsService;
 import com.oe.test.service.INewsService;
-import com.oe.test.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,7 +21,7 @@ public class IndexController {
     private INewsService newsService;
 
     @Autowired
-    private IUserService userService;
+    private IBooksService booksService;
 
     @Autowired
     private ICategoryService categoryService;
@@ -37,6 +37,7 @@ public class IndexController {
         model.addAttribute("newsAll", newsService.getAllNews());
         model.addAttribute("tags", categoryService.getAllCategoryTags());
         model.addAttribute("events",eventsService.getAll());
+        model.addAttribute("books", booksService.getAll());
 
         if (principal != null) {
             String name = principal.getName();

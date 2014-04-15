@@ -24,7 +24,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" id="addBook">
+                <a href="${baseURL}/books/add" id="addBook">
                     <i class="icon-book"></i>
                     Добавити книгу
                 </a>

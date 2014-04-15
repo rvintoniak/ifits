@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `test` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `test`;
--- MySQL dump 10.13  Distrib 5.6.11, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
 --
 -- Host: localhost    Database: test
 -- ------------------------------------------------------
--- Server version	5.6.11
+-- Server version	5.6.16-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,6 +16,37 @@ USE `test`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `books`
+--
+
+DROP TABLE IF EXISTS `books`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `books` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tittle` varchar(45) DEFAULT NULL,
+  `author` varchar(45) DEFAULT NULL,
+  `pubYear` int(11) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `img` varchar(200) DEFAULT NULL,
+  `file` varchar(200) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `books`
+--
+
+LOCK TABLES `books` WRITE;
+/*!40000 ALTER TABLE `books` DISABLE KEYS */;
+INSERT INTO `books` VALUES (8,'sasa','asdasd',1,'asssad','2014-04-15 13:12:20','default','default',1),(9,'asf','asf',1,'as','2014-04-15 13:13:44','D://java/ifits/attachments/img/logo_chempionat1_cur2.jpg','D://java/ifits/attachments/files/Хабибулин И.Ш. - Самоучитель XML - 2003.pdf',1),(10,'asds','asdasds',111,'sadaasdasd','2014-04-15 13:16:30','D://java/ifits/attachments/img/google_chrome.png','default',1),(11,'asds','asdasds',111,'sadaasdasd','2014-04-15 13:17:32','D://java/ifits/attachments/img/google_chrome.png','D://java/ifits/attachments/files/Nilsen_SQL Server2005.pdf',1);
+/*!40000 ALTER TABLE `books` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `events`
@@ -172,4 +203,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-14 22:42:22
+-- Dump completed on 2014-04-15 17:17:30

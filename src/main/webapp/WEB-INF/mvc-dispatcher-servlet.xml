@@ -16,8 +16,8 @@
                                      secured-annotations="enabled"/>
     <context:component-scan base-package="com.oe.test.controllers"/>
     <context:annotation-config/>
-    <mvc:annotation-driven />
-    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
           p:location="/WEB-INF/jdbc.properties"></bean>
@@ -48,7 +48,7 @@
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
         <!-- one of the properties available; the maximum file size in bytes -->
-        <property name="maxUploadSize" value="10000000" />
+        <property name="maxUploadSize" value="100000000"/>
     </bean>
     <tx:annotation-driven/>
     <bean id="transactionManager"
@@ -83,5 +83,7 @@
     <bean id="CategoryService" class="com.oe.test.service.CategoryService"></bean>
     <bean id="EventsDAO" class="com.oe.test.dao.EventsDao"></bean>
     <bean id="EventsService" class="com.oe.test.service.EventsService"></bean>
+    <bean id="BooksDAO" class="com.oe.test.dao.BooksDao"></bean>
+    <bean id="BooksService" class="com.oe.test.service.BooksService"></bean>
 
 </beans>

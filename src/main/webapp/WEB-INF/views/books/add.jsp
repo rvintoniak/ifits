@@ -7,10 +7,11 @@
 <c:set var="baseURL" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
+    <title></title>
 </head>
 <body>
-<div class="well addEvent">
-    <form:form method="post" action="${baseURL}/events/add" modelAttribute="event" cssClass="form"
+<div class="well addBook">
+    <form:form method="post" action="${baseURL}/books/add" modelAttribute="book" cssClass="form"
                enctype="multipart/form-data">
         <div class="control-group">
             <div class="controls">
@@ -20,38 +21,39 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <form:input path="address" placeholder="Адреса подію" cssClass="input-xlarge"/>
-                <form:errors path="address"/>
+                <form:input path="author" placeholder="Автор" cssClass="input-xlarge"/>
+                <form:errors path="author"/>
             </div>
         </div>
         <!--DATEPICKER-->
-        <div class="input-append date">
-            <form:input path="dateStart" cssClass="span2"/>
-            <span class="add-on"><i class="icon-th"></i></span>
-            <form:errors path="dateStart"/>
-        </div>
-
-        <div class="input-append bootstrap-timepicker">
-            <form:input path="timeStart" id="timepick" cssClass="input-small"/>
-            <span class="add-on"><i class="icon-time"></i></span>
-            <form:errors path="timeStart"/>
-        </div>
-
         <div class="control-group">
             <div class="controls">
-                <form:input type="file" path="file" id="file" accept="image/*"/>
-                <form:errors path="file"/>
+                <form:input path="pubYear" placeholder="Рік" cssClass="input-xlarge"/>
+                <form:errors path="pubYear"/>
             </div>
         </div>
+
         <div class="input">
             <form:textarea path="description" cssClass="input-xlarge" id="textarea" rows="3" placeholder="опис події"/>
             <form:errors path="description"/>
         </div>
-        <form:textarea path="text" id="editorEvents"/>
-        <form:errors path="text"/>
+
+        <div class="control-group">
+            <div class="controls">
+                <form:input type="file" path="image" id="img" accept="image/*"/>
+                <form:errors path="image"/>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <form:input type="file" path="bookfile" id="file" accept="*"/>
+                <form:errors path="bookfile"/>
+            </div>
+        </div>
         <br/>
         <input type="submit" class="btn btn-info" value="зберегти">
     </form:form>
 </div>
 </body>
-</html> 
+</html>

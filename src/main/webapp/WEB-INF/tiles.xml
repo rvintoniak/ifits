@@ -63,4 +63,8 @@
         <put-attribute name="slider" value=""/>
         <put-attribute name="content" value="/WEB-INF/views/events/view.jsp"/>
     </definition>
+
+    <definition name="addBook" extends=".adminTemplate">
+        <put-attribute name="content" value="/WEB-INF/views/books/add.jsp"/>
+    </definition>
 </tiles-definitions>

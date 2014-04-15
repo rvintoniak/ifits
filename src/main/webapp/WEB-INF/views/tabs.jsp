@@ -127,57 +127,42 @@
         <script src="rating/jquery.rating.js"></script>
         <link href="rating/rating.css" rel="stylesheet">
         <div class="row">
-            <div class="flip3D">
-                <div class="back">
-                    <div>не перед</div>
-                    <div id="rate2" class="rating" my_book_id="1">&nbsp;</div>
-                    <script>$("#rate2").rating("www.google.com", {maxvalue: 5, curvalue: 0});</script>
-                </div>
-                <div class="front">
-                    <div>
-                        book php
-                        <br>
-
-                        <div style="width:100px; margin: 0 auto;">
-                            <div id="rate" class="rating" my_book_id="1">&nbsp;</div>
+            <c:forEach var="book" items="${books}">
+                <div class="flip3D">
+                    <div class="back">
+                        <div class="backBody">
+                            <div>
+                                <strong>
+                                        ${book.tittle}
+                                </strong>
+                            </div>
+                            <div>Автор <strong>${book.author}</strong></div>
+                            <div>рік <strong>${book.pubYear}</strong></div>
+                            <div>
+                                <strong>${book.description}</strong>
+                            </div>
                         </div>
-                        <script>$("#rate").rating("www.google.com", {maxvalue: 5, curvalue: 0});</script>
+                        <div class="backFooter">
+                            <a href="${book.file}" class="btn btn-info btn-small">
+                                <i class="icon-download"></i> завантажити
+                            </a>
+
+                            <div id="rate" class="rating" my_book_id="1"></div>
+                        </div>
+                    </div>
+                <div class="front">
+                    <div class="frontImage" style="background: url(${book.img}); background-size: cover;"></div>
+                    <div class="frontFooter">
+                        book php
+                        <div style="width:100px; margin: 0 auto;">
+                            <div id="rate2" class="rating"></div>
+                        </div>
+
                     </div>
 
                 </div>
             </div>
-            <div class="flip3D">
-                <div class="back">
-                    <div>не перед</div>
-                </div>
-                <div class="front">
-                    <div>book java</div>
-                </div>
-            </div>
-            <div class="flip3D">
-                <div class="back">
-                    <div>не перед</div>
-                </div>
-                <div class="front">
-                    <div>book c#</div>
-                </div>
-            </div>
-            <div class="flip3D">
-                <div class="back">
-                    <div>не перед</div>
-                </div>
-                <div class="front">
-                    <div>перед</div>
-                </div>
-            </div>
-            <div class="flip3D">
-                <div class="back">
-                    <div>не перед</div>
-                </div>
-                <div class="front">
-                    <div>book javascript</div>
-                </div>
-            </div>
+            </c:forEach>
         </div>
     </div>
 </div>
