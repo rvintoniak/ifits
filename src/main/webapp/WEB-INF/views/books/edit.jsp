@@ -11,9 +11,10 @@
 </head>
 <body>
 <div class="well addBook">
-    <h2>Додати книгу:</h2>
-    <form:form method="post" action="${baseURL}/books/add" modelAttribute="book" cssClass="form"
+    <form:form method="post" action="${baseURL}/books/edit/${book.id}" modelAttribute="book" cssClass="form"
                enctype="multipart/form-data">
+        <form:hidden path="id"/>
+        <form:hidden path="user.id"/>
         <div class="control-group">
             <div class="controls">
                 <form:input path="tittle" placeholder="назва" cssClass="input-xlarge"/>
@@ -54,30 +55,6 @@
         <br/>
         <input type="submit" class="btn btn-info" value="зберегти">
     </form:form>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th>Назва</th>
-            <th>Автор</th>
-            <th>Рік</th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="book" items="${books}">
-            <tr>
-                <td>${book.id}</td>
-                <td>${book.tittle}</td>
-                <td>${book.author}</td>
-                <td>${book.author}</td>
-                <td><a href="${baseURL}/books/edit/${book.id}"><i class="icon-pencil"></i></a></td>
-                <td><a href="${baseURL}/books/delete/${book.id}"><i class="icon-remove"></i></a></td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
 </div>
 </body>
 </html>

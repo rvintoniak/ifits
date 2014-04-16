@@ -5,7 +5,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -49,6 +51,8 @@ public class Book {
     @Transient
     private CommonsMultipartFile bookfile;
 
+    @OneToMany(targetEntity = Rating.class, mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Rating> ratings = new ArrayList<Rating>();
 
     public Integer getId() {
         return id;
@@ -138,4 +142,11 @@ public class Book {
         this.bookfile = bookfile;
     }
 
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
 }

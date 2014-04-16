@@ -74,6 +74,12 @@ td.active a {
     background-color: #f5f5f5;
     border: 1px solid #e3e3e3;
     height: 50px;
+    overflow: hidden;
+}
+
+.frontFooter span {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    color: #47a3da;
 }
 
 .flip3D > .back {
@@ -81,10 +87,13 @@ td.active a {
     position: absolute;
     -webkit-transform: perspective(600px) rotateY(180deg);
     transform: perspective(600px) rotateY(180deg);
-    background: #80BFFF;
+    background: #fff;
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    color: #47a3da;
     width: 270px;
     height: 250px;
     border-radius: 7px;
+    border: 1px solid #ddd;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transition: -webkit-transform .5s linear 0s;
@@ -130,10 +139,6 @@ td.active a {
 
 .backFooter a {
     margin: 12px;
-}
-
-.backFooter > .rating {
-    margin-top: 17px;
 }
 
 #search {

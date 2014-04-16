@@ -67,4 +67,8 @@
     <definition name="addBook" extends=".adminTemplate">
         <put-attribute name="content" value="/WEB-INF/views/books/add.jsp"/>
     </definition>
+
+    <definition name="editBook" extends=".adminTemplate">
+        <put-attribute name="content" value="/WEB-INF/views/books/edit.jsp"/>
+    </definition>
 </tiles-definitions>

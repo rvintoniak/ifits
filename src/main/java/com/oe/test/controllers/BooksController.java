@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,23 +36,24 @@ public class BooksController {
     @Autowired
     private IBooksService booksService;
 
+    String filePath = "D://java/ifits/target/IFITS/resources/books";
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String add(ModelMap model) {
 
         model.addAttribute("book", new Book());
+        model.addAttribute("books", booksService.getAll());
         model.addAttribute("active", "addBook");
 
         return "addBook";
     }
 
-    // @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addDo(@Valid @ModelAttribute("book") Book book, BindingResult result, Principal principal, ModelMap model) {
 
 
-        String filePath = "D://java/ifits/attachments";
         String username = principal.getName();
         MultipartFile img = book.getImage();
         MultipartFile file = book.getBookfile();
@@ -61,46 +63,66 @@ public class BooksController {
         if (result.hasErrors()) {
             return "addBook";
         }
-        book.setImg(img.isEmpty() ? "default" : filePath + "/img/" + img.getOriginalFilename());
-        book.setFile(file.isEmpty() ? "default" : filePath + "/files/" + file.getOriginalFilename());
         book.setUser(userService.getUserByUserName(username));
-        File image = new File(filePath + "/img/" + img.getOriginalFilename());
-        File bookfile = new File(filePath + "/files/" + file.getOriginalFilename());
-        FileOutputStream fos = null;
-
-        try {
-            image.createNewFile();
-            bookfile.createNewFile();
-            fos = new FileOutputStream(image);
-            IOUtils.copy(img.getInputStream(), fos);
-            fos = new FileOutputStream(bookfile);
-            IOUtils.copy(file.getInputStream(), fos);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            booksService.add(book);
-            return "redirect:/index";
-        }
+        writeFile(file, book);
+        writeImage(img, book);
+        booksService.add(book);
+        return "redirect:/index";
     }
 
-   /* @PreAuthorize("isAuthenticated()")
-    @RequestMapping("/delete/{id}")
-    public String deleteContact(@PathVariable("id") Integer id) {
 
-        newsService.deleteNews(id);
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable("id") Integer id, ModelMap model) {
+
+        model.addAttribute("book", booksService.get(id));
+        model.addAttribute("active", "addBook");
+
+        return "editBook";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String editNewsDo(@Valid @ModelAttribute("book") Book book, BindingResult result, ModelMap model, @PathVariable("id") Integer id) {
+        model.addAttribute("active", "addBook");
+        MultipartFile img = book.getImage();
+        MultipartFile file = book.getBookfile();
+        if (file.isEmpty()) {
+            book.setFile(booksService.get(id).getFile());
+        } else {
+            booksService.fileValidator(result, file);
+            if (result.hasErrors()) {
+                return "editBook";
+            }
+            writeFile(file, book);
+        }
+
+        if (img.isEmpty()) {
+            book.setImg(booksService.get(id).getImg());
+        } else {
+            newsService.fileValidator(result, file);
+            if (result.hasErrors()) {
+                return "editBook";
+            }
+            writeImage(img, book);
+        }
+        if (result.hasErrors()) {
+            return "editBook";
+        }
+        booksService.update(book);
 
         return "redirect:/index";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
+
+        booksService.delete(id);
+
+        return "redirect:/books/add";
+    }
+/*
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editNews(@PathVariable("id") Integer id, ModelMap model) {
@@ -200,4 +222,51 @@ public class BooksController {
         if (file.getSize() > maxlenght)
             result.rejectValue("bookfile", "file.error.maxsize", "файл > 100mb");
     }
+
+    public void writeFile(MultipartFile file, Book book) {
+        book.setFile(file.getOriginalFilename());
+        File bookfile = new File(filePath + "/files/" + file.getOriginalFilename());
+        FileOutputStream fos = null;
+        try {
+            bookfile.createNewFile();
+            fos = new FileOutputStream(bookfile);
+            IOUtils.copy(file.getInputStream(), fos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void writeImage(MultipartFile img, Book book) {
+        book.setImg(img.getOriginalFilename());
+        File image = new File(filePath + "/img/" + img.getOriginalFilename());
+        FileOutputStream fos = null;
+        try {
+            image.createNewFile();
+            fos = new FileOutputStream(image);
+            IOUtils.copy(img.getInputStream(), fos);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

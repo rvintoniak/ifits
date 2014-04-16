@@ -1,5 +1,7 @@
 package com.oe.test.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,12 +15,15 @@ public class News {
     private Integer id;
 
     @Column(name = "tittle")
+    @NotEmpty(message = "Заповніть поле!")
     private String tittle;
 
     @Column(name = "description")
+    @NotEmpty(message = "Заповніть поле!")
     private String description;
 
     @Column(name = "text")
+    @NotEmpty(message = "Заповніть поле!")
     private String text;
 
     @Column(name = "date", insertable = false, updatable = false)

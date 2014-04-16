@@ -124,44 +124,51 @@
         </div>
     </div>
     <div class="tab-pane" id="books">
-        <script src="rating/jquery.rating.js"></script>
-        <link href="rating/rating.css" rel="stylesheet">
+        <div class="row">
+            <form role="search" id="demo-b" class="navbar-search pull-right">
+                <div class="input-append">
+                    <input type="text" id="search">
+                </div>
+            </form>
+        </div>
         <div class="row">
             <c:forEach var="book" items="${books}">
                 <div class="flip3D">
                     <div class="back">
                         <div class="backBody">
                             <div>
-                                <strong>
-                                        ${book.tittle}
-                                </strong>
+                                <strong>${book[0].tittle}</strong>
                             </div>
-                            <div>Автор <strong>${book.author}</strong></div>
-                            <div>рік <strong>${book.pubYear}</strong></div>
+                            <div>Автор <strong>${book[0].author}</strong></div>
+                            <div>Рік <strong>${book[0].pubYear}</strong></div>
                             <div>
-                                <strong>${book.description}</strong>
+                                <strong>${book[0].description}</strong>
                             </div>
                         </div>
+                        <div id="rateBack${book[0].id}" class="rating" my_book_id="${book[0].id}"
+                             style="margin-top:18px;">&nbsp;</div>
+                        <script>$("#rateBack${book[0].id}").rating("www.google.com", {maxvalue: 5, curvalue: 0 });</script>
                         <div class="backFooter">
-                            <a href="${book.file}" class="btn btn-info btn-small">
-                                <i class="icon-download"></i> завантажити
+                            <a href="${baseURL}/resources/books/files/${book[0].file}" class="btn btn-info btn-small"
+                               target="_blank">
+                            <i class="icon-download"></i> завантажити
                             </a>
-
-                            <div id="rate" class="rating" my_book_id="1"></div>
                         </div>
                     </div>
-                <div class="front">
-                    <div class="frontImage" style="background: url(${book.img}); background-size: cover;"></div>
-                    <div class="frontFooter">
-                        book php
-                        <div style="width:100px; margin: 0 auto;">
-                            <div id="rate2" class="rating"></div>
+                    <div class="front">
+                        <div class="frontImage"
+                             style="background: url(${baseURL}/resources/books/img/${book[0].img}); background-size: cover;"></div>
+                        <div class="frontFooter">
+                            <span>${book[0].tittle} </span>
+
+                            <div style="width:100px; margin: 0 auto;">
+                                <div id="rate${book[0].id}" class="rating" my_book_id="${book[0].id}">&nbsp;</div>
+                                <script>$("#rate${book[0].id}").rating("www.google.com", {maxvalue: 5, curvalue: Math.ceil(${book[1]}) });</script>
+                            </div>
+
                         </div>
-
                     </div>
-
                 </div>
-            </div>
             </c:forEach>
         </div>
     </div>

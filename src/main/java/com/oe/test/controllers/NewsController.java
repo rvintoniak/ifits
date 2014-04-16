@@ -19,6 +19,7 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.security.Principal;
@@ -59,7 +60,7 @@ public class NewsController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addNewsDo(@ModelAttribute("news") News news, BindingResult result,
+    public String addNewsDo(@Valid @ModelAttribute("news") News news, BindingResult result,
                             @RequestParam("file") MultipartFile file, Principal principal, ModelMap model) {
         String username = principal.getName();
         news.setUser(userService.getUserByUserName(username));

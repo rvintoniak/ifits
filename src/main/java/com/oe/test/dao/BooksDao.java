@@ -26,7 +26,8 @@ public class BooksDao implements IBooksDao {
     @Override
     @Transactional
     public List<Book> getAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("from Book b order by b.id desc")
+        return this.sessionFactory.getCurrentSession().createQuery("select b, coalesce(avg(r.value),0) from Book b left join b.ratings r  " +
+                "group by r.book order by b.id desc")
                 .list();
     }
 

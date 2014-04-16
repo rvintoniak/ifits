@@ -11,5 +11,6 @@
         <mapping class="com.oe.test.model.Category"></mapping>
         <mapping class="com.oe.test.model.Event"></mapping>
         <mapping class="com.oe.test.model.Book"></mapping>
+        <mapping class="com.oe.test.model.Rating"></mapping>
     </session-factory>
 </hibernate-configuration>

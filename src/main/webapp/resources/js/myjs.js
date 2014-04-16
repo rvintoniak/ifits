@@ -67,11 +67,11 @@ jQuery(document).ready(function () {
             for (var i = 0; i < l; i++) {
                 if (!regexpPattern.test(items[i].textContent)) {
                     //alert(items[i]);
-                    items[i].style.display = 'none';
+                    //items[i].style.display = 'none';
                     $(items[i]).parent().parent().parent().hide(1000);
                     //items[i].style.backgroundColor = 'red';
                 } else {
-                    $(items[i]).parent().parent().parent().show();
+                    $(items[i]).parent().parent().parent().fadeIn(1500);
                     console.log(i);
                     //$(items[i]).parent().parent().fadeIn(1500);
                     //items[i].style.backgroundColor = 'white';

@@ -14,6 +14,10 @@
     display: none;
 }
 
+#youtube {
+    background: url(../widget/elRTE-stable/images/yt.png);
+}
+
 /*.addChart,.addEvent,.addBook,.addBook,.myProfile,.users,.addCategory{
 	display: none;
 }*/
