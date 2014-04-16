@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `test` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `test`;
--- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.6.11, for Win32 (x86)
 --
 -- Host: localhost    Database: test
 -- ------------------------------------------------------
--- Server version	5.6.16-log
+-- Server version	5.6.11
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,6 +18,32 @@ USE `test`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `book_rating`
+--
+
+DROP TABLE IF EXISTS `book_rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `book_rating` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rating_value` int(11) DEFAULT NULL,
+  `book_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book_rating`
+--
+
+LOCK TABLES `book_rating` WRITE;
+/*!40000 ALTER TABLE `book_rating` DISABLE KEYS */;
+INSERT INTO `book_rating` VALUES (1,3,18,1),(2,4,18,16);
+/*!40000 ALTER TABLE `book_rating` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `books`
 --
 
@@ -29,13 +55,13 @@ CREATE TABLE `books` (
   `tittle` varchar(45) DEFAULT NULL,
   `author` varchar(45) DEFAULT NULL,
   `pubYear` int(11) DEFAULT NULL,
-  `description` varchar(200) DEFAULT NULL,
+  `description` text,
   `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `img` varchar(200) DEFAULT NULL,
   `file` varchar(200) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +70,7 @@ CREATE TABLE `books` (
 
 LOCK TABLES `books` WRITE;
 /*!40000 ALTER TABLE `books` DISABLE KEYS */;
-INSERT INTO `books` VALUES (8,'sasa','asdasd',1,'asssad','2014-04-15 13:12:20','default','default',1),(9,'asf','asf',1,'as','2014-04-15 13:13:44','D://java/ifits/attachments/img/logo_chempionat1_cur2.jpg','D://java/ifits/attachments/files/Хабибулин И.Ш. - Самоучитель XML - 2003.pdf',1),(10,'asds','asdasds',111,'sadaasdasd','2014-04-15 13:16:30','D://java/ifits/attachments/img/google_chrome.png','default',1),(11,'asds','asdasds',111,'sadaasdasd','2014-04-15 13:17:32','D://java/ifits/attachments/img/google_chrome.png','D://java/ifits/attachments/files/Nilsen_SQL Server2005.pdf',1);
+INSERT INTO `books` VALUES (18,'JQUERY','Author',2006,'Jquery JqueryJqueryJqueryJqueryJquery','2014-04-15 21:35:37','images.jpg','Manning.jQuery.in_.Action.2nd.Edition.Jun_.2010.pdf',1),(19,'Java','hshadh',2007,'fdsfdsfdsdsfdsf','2014-04-15 21:41:46','a11bf303982a965ffcd6b2d6ff9cdf20.png','[Duane_K._Fields,_Mark_A._Kolb,_Shawn_Bayern]_Web_(Bookos.org).pdf',1);
 /*!40000 ALTER TABLE `books` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,7 +127,7 @@ CREATE TABLE `news` (
   PRIMARY KEY (`id`),
   KEY `FK_Category_idx` (`category_id`),
   CONSTRAINT `FK_Category` FOREIGN KEY (`category_id`) REFERENCES `newscategory` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,4 +229,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-15 17:17:30
+-- Dump completed on 2014-04-16  3:49:23
